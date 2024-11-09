@@ -118,7 +118,9 @@
                                 {{ \Carbon\Carbon::parse($value->in_time)->format('h:i:s a') ?? '' }}
                             </td>
                             <td class="text-center min-w-150px">
-                                <a href="{{ $value->out_selfie }}" target="_blank">Out Selfie</a>
+                                @if ($value->out_selfie)
+                                    <a href="{{ $value->out_selfie }}" target="_blank">Out Selfie</a>
+                                @endif
                             </td>
                             <td class="text-center">
                                 @if ($value->out_time)

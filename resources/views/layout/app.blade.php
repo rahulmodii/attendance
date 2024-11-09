@@ -149,6 +149,14 @@
                                                 <span class="menu-title">Settings</span>
                                             </a>
                                         </div>
+                                        <div class="menu-item">
+                                            <a class="menu-link" href="{{ route('employee') }}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Employee</span>
+                                            </a>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -373,6 +381,7 @@
                 text: event[0],
                 pos:'top-right'
             });
+            $("#kt_modal_add_user").modal('hide')
         });
     </script>
 </body>
