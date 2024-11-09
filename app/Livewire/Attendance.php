@@ -152,7 +152,7 @@ class Attendance extends Component
 
     public function render()
     {
-        $auth = auth()->user();
+        $auth = Auth::user();
         $data = AttendanceSession::where('user_id', $auth->id)->orderBy('id', 'desc')->get();
         return view('livewire.attendance', compact('data'));
     }
