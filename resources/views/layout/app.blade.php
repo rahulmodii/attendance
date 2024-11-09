@@ -4,24 +4,21 @@
 <head>
     <title>Attendance management</title>
     <meta charset="utf-8" />
-    <meta name="description"
-        content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
-    <meta name="keywords"
-        content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Metronic - The World's #1 Selling Bootstrap Admin Template by KeenThemes" />
-    <meta property="og:url" content="https://keenthemes.com/metronic" />
+    <meta property="og:title" content="" />
+    <meta property="og:url" content="" />
     <meta property="og:site_name" content="Metronic by Keenthemes" />
-    <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+    <link rel="canonical" href="" />
     <link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link href="/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
     <link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css"
-        href="/dist/snackbar.css" />
+    <link rel="stylesheet" type="text/css" href="/dist/snackbar.css" />
     @livewireStyles()
 </head>
 
@@ -142,7 +139,7 @@
                                             </a>
                                         </div>
                                         <div class="menu-item">
-                                            <a class="menu-link" href="{{ route('settings') }}">
+                                            <a class="menu-link active" href="{{ route('settings') }}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
@@ -150,7 +147,7 @@
                                             </a>
                                         </div>
                                         <div class="menu-item">
-                                            <a class="menu-link" href="{{ route('employee') }}">
+                                            <a class="menu-link active" href="{{ route('employee') }}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
@@ -173,7 +170,8 @@
                                 </div>
                                 <div class="d-flex flex-column align-items-start justify-content-center ms-3">
                                     <span class="text-gray-500 fs-8 fw-semibold">Hello</span>
-                                    <a href="#" class="text-gray-800 fs-7 fw-bold text-hover-primary">User</a>
+                                    <a href="#"
+                                        class="text-gray-800 fs-7 fw-bold text-hover-primary">{{ auth()->user()->name ?? '' }}</a>
                                 </div>
                             </div>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
@@ -184,12 +182,13 @@
                                             <img alt="Logo" src="/assets/media/avatars/300-1.jpg" />
                                         </div>
                                         <div class="d-flex flex-column">
-                                            <div class="fw-bold d-flex align-items-center fs-5">{{ auth()->user()->name ?? ''}}
+                                            <div class="fw-bold d-flex align-items-center fs-5">
+                                                {{ auth()->user()->name ?? '' }}
                                                 <span
                                                     class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span>
                                             </div>
                                             <a href="#"
-                                                class="fw-semibold text-muted text-hover-primary fs-7">{{ auth()->user()->mobile ?? ''}}</a>
+                                                class="fw-semibold text-muted text-hover-primary fs-7">{{ auth()->user()->mobile ?? '' }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -244,8 +243,7 @@
                                     <a href="{{ route('settings') }}" class="menu-link px-5">Account Settings</a>
                                 </div>
                                 <div class="menu-item px-5">
-                                    <a href="{{ route('logout') }}"
-                                        class="menu-link px-5">Sign Out</a>
+                                    <a href="{{ route('logout') }}" class="menu-link px-5">Sign Out</a>
                                 </div>
                             </div>
                         </div>
@@ -264,21 +262,21 @@
                             class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
                             <div class="text-gray-900 order-2 order-md-1">
                                 <span class="text-muted fw-semibold me-1">2024&copy;</span>
-                                <a href="https://keenthemes.com" target="_blank"
-                                    class="text-gray-800 text-hover-primary">Keenthemes</a>
+                                <a href="/" target="_blank"
+                                    class="text-gray-800 text-hover-primary">{{ config('app.name') }}</a>
                             </div>
                             <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-                                <li class="menu-item">
-                                    <a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a>
+                                {{-- <li class="menu-item">
+                                    <a href="/" target="_blank" class="menu-link px-2">About</a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="https://devs.keenthemes.com" target="_blank"
+                                    <a href="/" target="_blank"
                                         class="menu-link px-2">Support</a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="https://1.envato.market/EA4JP" target="_blank"
+                                    <a href="/" target="_blank"
                                         class="menu-link px-2">Purchase</a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -353,6 +351,7 @@
                 webcam.stop();
             }, 5000);
         }
+
         function captureCameraCheckout() {
             $("#canvasVideo").css({
                 'display': 'block'
@@ -379,7 +378,7 @@
         Livewire.on('message', (event) => {
             Snackbar.show({
                 text: event[0],
-                pos:'top-right'
+                pos: 'top-right'
             });
             $("#kt_modal_add_user").modal('hide')
         });
