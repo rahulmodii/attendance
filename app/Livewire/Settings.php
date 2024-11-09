@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Settings as ModelsSettings;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Settings extends Component
@@ -14,12 +15,12 @@ class Settings extends Component
     public $longitude;
     public $radius;
 
-    public function mount(){
+    public function mount()
+    {
 
-        $precheck = ModelsSettings::where('mobile','9024829041')->first();
+        $auth = Auth::user();
+        $precheck = ModelsSettings::where('user_id', $auth->id)->first();
         if ($precheck) {
-            $this->name = $precheck->name;
-            $this->mobile = $precheck->mobile;
             $this->latitude = $precheck->latitude;
             $this->longitude = $precheck->longitude;
             $this->radius = $precheck->radius;
@@ -28,11 +29,14 @@ class Settings extends Component
 
     public function save()
     {
-        $precheck = ModelsSettings::where('mobile',$this->mobile)->first();
+        $auth = Auth::user();
+        $precheck = ModelsSettings::where('user_id', $auth->id)->first();
         if ($precheck) {
-            ModelsSettings::where(['mobile' => $this->mobile])->update(['latitude' => $this->latitude, 'longitude' => $this->longitude, 'radius' => $this->radius]);
-        }else{
-            ModelsSettings::create(['mobile' => $this->mobile, 'latitude' => $this->latitude, 'longitude' => $this->longitude, 'radius' => $this->radius]);
+            ModelsSettings::find($auth->id)->update(['latitude' => $this->latitude, 'longitude' => $this->longitude, 'radius' => $this->radius]);
+            return $this->dispatch('message', 'Settings Updated Successfully!!');
+        } else {
+            ModelsSettings::create(['user_id' => $auth->id, 'latitude' => $this->latitude, 'longitude' => $this->longitude, 'radius' => $this->radius]);
+            return $this->dispatch('message', 'Settings Create Successfully!!');
         }
     }
 

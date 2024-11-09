@@ -19,44 +19,6 @@
                 <!--begin::Card body-->
                 <div class="card-body border-top p-9">
 
-                    <div class="row mb-6">
-                        <!--begin::Label-->
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Full Name</label>
-                        <!--end::Label-->
-                        <!--begin::Col-->
-                        <div class="col-lg-8">
-                            <!--begin::Row-->
-                            <div class="row">
-                                <!--begin::Col-->
-                                <div class="col-lg-12 fv-row fv-plugins-icon-container">
-                                    <input type="text" name="fname"
-                                        class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                        placeholder="First name" wire:model='name'>
-                                    <div
-                                        class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                    </div>
-                                </div>
-
-                            </div>
-                            <!--end::Row-->
-                        </div>
-                        <!--end::Col-->
-                    </div>
-
-                    <div class="row mb-6">
-                        <!--begin::Label-->
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Mobile</label>
-                        <!--end::Label-->
-                        <!--begin::Col-->
-                        <div class="col-lg-8 fv-row fv-plugins-icon-container">
-                            <input type="text" name="company" class="form-control form-control-lg form-control-solid"
-                                placeholder="Mobile" wire:model='mobile'>
-                            <div
-                                class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                            </div>
-                        </div>
-                        <!--end::Col-->
-                    </div>
 
 
 
