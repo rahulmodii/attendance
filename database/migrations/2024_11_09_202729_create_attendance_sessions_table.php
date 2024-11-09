@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('attendance_sessions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
+            $table->date('date')->nullable();
             $table->time('in_time')->nullable();
             $table->time('out_time')->nullable();
+            $table->string('in_selfie')->nullable();
+            $table->string('out_selfie')->nullable();
             $table->integer('total_minutes')->default(0);
             $table->timestamps();
         });

@@ -3,7 +3,10 @@
 namespace App\Livewire;
 
 use App\Models\Attendance as ModelsAttendance;
+use App\Models\AttendanceSession;
 use App\Models\Settings;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -15,6 +18,7 @@ class Attendance extends Component
     public $longitude;
     public $image;
     public $isDisable = true;
+    public $currentSessionId = 0;
 
     protected $listeners = [
         'set:latitude-longitude' => 'setLatitudeLongitude',
@@ -31,68 +35,66 @@ class Attendance extends Component
 
     public function setLiveImage($liveImage)
     {
-        $auth = auth()->user();
-        $precheck = ModelsAttendance::where(['mobile' => $auth->mobile])->orderBy('id', 'desc')->first();
-        if (!$precheck && $precheck->type == 1) {
-            $this->dispatch('message', 'Please Check Out First');
-            return '';
+        $auth = Auth::user();
+        // dd($auth);
+        $precheck = AttendanceSession::where(['date' => Carbon::today()->format('Y-m-d'), 'user_id' => $auth->id])->whereNull('out_time')->latest()->first();
+
+        if ($precheck) {
+            return $this->dispatch('message', 'Please Check Out First');
         } else {
             $this->image = $liveImage;
-            $image = explode('base64,', $liveImage);
-            $image = end($image);
-            $image = str_replace(' ', '+', $image);
-            $file = "images/" . uniqid() . '.png';
-            if (preg_match('/^data:image\/(\w+);base64,/', $liveImage, $type)) {
-                $data = substr($liveImage, strpos($liveImage, ',') + 1);
-                $type = strtolower($type[1]); // Image type (png, jpeg, gif, etc.)
-                if (!in_array($type, ['jpg', 'jpeg', 'png', 'gif'])) {
-                    return response()->json(['error' => 'Invalid image type'], 415);
-                }
-                $data = base64_decode($data);
-                $file = uniqid() . '.' . $type;
-            }
-            Storage::disk('public')->put($file, $data);
-            ModelsAttendance::create(['user_id' => $auth->id, 'mobile' => $auth->mobile, 'type' => '1', 'image' => $file]);
-            $this->dispatch('message', 'Check In Successfully Done');
-        }
+            $image = str_replace('data:image/png;base64,', '', $this->image);
 
+            // Decode the image
+            $image = preg_replace('/\s+/', '', $image);
+            $image = base64_decode($image);
+
+            // Define a unique filename with the correct extension
+            $filename = 'image_' . time() . '.png';
+
+            // Store the image in the 'public' disk (in `storage/app/public`)
+            Storage::disk('public')->put($filename, $image);
+            $url = Storage::url($filename);
+
+            AttendanceSession::create([
+                'user_id' => $auth->id,
+                'date' => now()->toDateString(),
+                'in_time' => now()->toTimeString(),
+                'in_selfie' => $url,
+            ]);
+
+        }
     }
 
     public function setLiveImageCheckout($liveImage)
     {
-        $auth = auth()->user();
-        $precheck = ModelsAttendance::where(['mobile' => $auth->mobile])->orderBy('id', 'desc')->first();
-        if (!$precheck || $precheck->type == 0) {
-            $this->dispatch('message', 'Please Check In First');
-            return '';
+        $auth = Auth::user();
+        $precheck = AttendanceSession::where(['date' => Carbon::today()->format('Y-m-d'), 'user_id' => $auth->id])->whereNull('out_time')->latest()->first();
+        if (!$precheck) {
+            return $this->dispatch('message', 'Please Check In First');
         } else {
             $this->image = $liveImage;
-            $image = explode('base64,', $liveImage);
-            $image = end($image);
-            $image = str_replace(' ', '+', $image);
-            $file = "images/" . uniqid() . '.png';
-            if (preg_match('/^data:image\/(\w+);base64,/', $liveImage, $type)) {
-                $data = substr($liveImage, strpos($liveImage, ',') + 1);
-                $type = strtolower($type[1]); // Image type (png, jpeg, gif, etc.)
-                if (!in_array($type, ['jpg', 'jpeg', 'png', 'gif'])) {
-                    return response()->json(['error' => 'Invalid image type'], 415);
-                }
-                $data = base64_decode($data);
-                $file = uniqid() . '.' . $type;
-            }
-            Storage::disk('public')->put($file, $data);
-            $diffInMinutes = abs(now()->diffInMinutes($precheck->created_at));
+            $image = str_replace('data:image/png;base64,', '', $liveImage);
+
+            // Decode the image
+            $image = preg_replace('/\s+/', '', $image);
+            $image = base64_decode($image);
+
+            // Define a unique filename with the correct extension
+            $filename = 'image_' . time() . '.png';
+
+            // Store the image in the 'public' disk (in `storage/app/public`)
+            Storage::disk('public')->put($filename, $image);
+            $url = Storage::url($filename);
+            $diffInMinutes = abs(now()->diffInMinutes($precheck->in_time));
             $roundedDiffInMinutes = round($diffInMinutes);
-            ModelsAttendance::create(['user_id' => $auth->id, 'mobile' => $auth->mobile, 'type' => '0', 'image' => $file, 'time' => $roundedDiffInMinutes]);
-            $this->dispatch('message', 'Check Out Successfully Done');
+            $precheck->update([
+                'out_selfie' => $url,
+                'out_time' => now()->toTimeString(),
+                'total_minutes' => $roundedDiffInMinutes,
+            ]);
+            return $this->dispatch('message', 'Check Out Successfully Done');
         }
-
-    }
-
-    public function checkout()
-    {
-        ModelsAttendance::create(['user_id' => 1, 'mobile' => '9024829041', 'type' => '0', 'image' => '']);
-        $this->dispatch('message', 'Check Out Successfully Uploaded');
     }
 
     public function calculateDistance()
@@ -150,7 +152,8 @@ class Attendance extends Component
 
     public function render()
     {
-        $data = ModelsAttendance::where('mobile', '9024829041')->orderBy('id', 'desc')->get();
+        $auth = auth()->user();
+        $data = AttendanceSession::where('user_id', $auth->id)->orderBy('id', 'desc')->get();
         return view('livewire.attendance', compact('data'));
     }
 }
