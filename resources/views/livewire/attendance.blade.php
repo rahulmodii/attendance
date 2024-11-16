@@ -92,50 +92,52 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table align-middle table-row-dashed fs-6 gy-3" id="kt_table_widget_5_table">
-                <thead>
-                    <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                        <th class="text-center pe-3 min-w-100px">Date</th>
-                        <th class="text-center min-w-150px">In Selfie</th>
-                        <th class="text-center pe-3 min-w-150px">In Time</th>
-                        <th class="text-center min-w-150px">Out Selfie</th>
-                        <th class="text-center min-w-150px">Out Time</th>
-                        <th class="text-center pe-3 min-w-150px">Time In Office (min)</th>
-                        {{-- <th class="text-center pe-3 min-w-100px">Status</th> --}}
-                    </tr>
-                </thead>
-                <tbody class="fw-bold text-gray-600">
-                    {{-- @dd($data); --}}
-                    @foreach ($data as $value)
-                        <tr>
-                            <td class="text-center">
-                                {{ \Carbon\Carbon::parse($value->date)->format('d-m-Y') ?? '' }}
-                            </td>
-                            <td class="text-center min-w-150px">
-                                <a href="{{ $value->in_selfie }}" target="_blank">In Selfie</a>
-                            </td>
-                            <td class="text-center">
-                                {{ \Carbon\Carbon::parse($value->in_time)->format('h:i:s a') ?? '' }}
-                            </td>
-                            <td class="text-center min-w-150px">
-                                @if ($value->out_selfie)
-                                    <a href="{{ $value->out_selfie }}" target="_blank">Out Selfie</a>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                @if ($value->out_time)
-                                    {{ \Carbon\Carbon::parse($value->out_time)->format('h:i:s a') ?? '' }}
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                {{ $value->total_minutes ?? '' }} min
-                            </td>
+            <div class="table-responsive">
+                <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer" id="kt_table_users">
+                    <thead>
+                        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                            <th class="text-center pe-3 min-w-100px">Date</th>
+                            <th class="text-center min-w-150px">In Selfie</th>
+                            <th class="text-center pe-3 min-w-150px">In Time</th>
+                            <th class="text-center min-w-150px">Out Selfie</th>
+                            <th class="text-center min-w-150px">Out Time</th>
+                            <th class="text-center pe-3 min-w-150px">Time In Office (min)</th>
+                            {{-- <th class="text-center pe-3 min-w-100px">Status</th> --}}
                         </tr>
-                    @endforeach
+                    </thead>
+                    <tbody class="fw-bold text-gray-600">
+                        {{-- @dd($data); --}}
+                        @foreach ($data as $value)
+                            <tr>
+                                <td class="text-center">
+                                    {{ \Carbon\Carbon::parse($value->date)->format('d-m-Y') ?? '' }}
+                                </td>
+                                <td class="text-center min-w-150px">
+                                    <a href="{{ $value->in_selfie }}" target="_blank">In Selfie</a>
+                                </td>
+                                <td class="text-center">
+                                    {{ \Carbon\Carbon::parse($value->in_time)->format('h:i:s a') ?? '' }}
+                                </td>
+                                <td class="text-center min-w-150px">
+                                    @if ($value->out_selfie)
+                                        <a href="{{ $value->out_selfie }}" target="_blank">Out Selfie</a>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    @if ($value->out_time)
+                                        {{ \Carbon\Carbon::parse($value->out_time)->format('h:i:s a') ?? '' }}
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    {{ $value->total_minutes ?? '' }} min
+                                </td>
+                            </tr>
+                        @endforeach
 
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
