@@ -337,51 +337,88 @@
         })
 
         function captureCamera() {
+            // Ensure the video container is visible
             $("#canvasVideo").css({
                 'display': 'block'
             });
+
             const webcamElement = document.getElementById('webcam');
             const canvasElement = document.getElementById('canvas');
             const snapSoundElement = document.getElementById('snapSound');
             const webcam = new Webcam(webcamElement, 'user', canvasElement, snapSoundElement);
-            webcam.start()
-                .then(result => {
-                    console.log("webcam started");
+
+            const videoConstraints = {
+                width: {
+                    ideal: 1920
+                }, // Ideal width (HD or Full HD)
+                height: {
+                    ideal: 1080
+                }, // Ideal height (HD or Full HD)
+                facingMode: "user" // Front camera
+            };
+            // Start the webcam and handle initialization
+            webcam.start(videoConstraints)
+                .then(() => {
+                    console.log("Webcam started");
+
+                    // Wait for a short delay to ensure webcam feed is ready before snapping
+                    setTimeout(() => {
+                        // Capture the picture
+                        const picture = webcam.snap();
+                        console.log("Captured picture:", picture);
+
+                        // Dispatch the image to Livewire
+                        Livewire.dispatch('set:live-image', {
+                            liveImage: picture
+                        });
+
+                        // Stop the webcam after capturing
+                        webcam.stop();
+                    }, 2000); // Adjust the delay as needed (2 seconds here)
                 })
                 .catch(err => {
-                    console.log(err);
+                    console.error("Error starting webcam:", err);
                 });
-            let picture = webcam.snap();
-            setTimeout(() => {
-                Livewire.dispatch('set:live-image', {
-                    liveImage: picture
-                })
-                webcam.stop();
-            }, 5000);
         }
+
 
         function captureCameraCheckout() {
             $("#canvasVideo").css({
                 'display': 'block'
             });
+
             const webcamElement = document.getElementById('webcam');
             const canvasElement = document.getElementById('canvas');
-            const snapSoundElement = document.getElementById('snapSound');
-            const webcam = new Webcam(webcamElement, 'user', canvasElement, snapSoundElement);
-            webcam.start()
-                .then(result => {
-                    console.log("webcam started");
+            const webcam = new Webcam(webcamElement, 'user', canvasElement);
+
+            const videoConstraints = {
+                width: {
+                    ideal: 1920
+                }, // Ideal width (HD or Full HD)
+                height: {
+                    ideal: 1080
+                }, // Ideal height (HD or Full HD)
+                facingMode: "user" // Front camera
+            };
+            webcam.start(videoConstraints)
+                .then(() => {
+                    console.log("Webcam started");
+
+                    // Add a slight delay to ensure the webcam feed is ready
+                    setTimeout(() => {
+                        let picture = webcam.snap();
+                        console.log("Captured picture:", picture);
+
+                        Livewire.dispatch('set:live-image-checkout', {
+                            liveImage: picture
+                        });
+
+                        webcam.stop();
+                    }, 10000); // Delay of 2 seconds
                 })
                 .catch(err => {
-                    console.log(err);
+                    console.error("Webcam error:", err);
                 });
-            let picture = webcam.snap();
-            setTimeout(() => {
-                Livewire.dispatch('set:live-image-checkout', {
-                    liveImage: picture
-                })
-                webcam.stop();
-            }, 5000);
         }
         Livewire.on('message', (event) => {
             Snackbar.show({

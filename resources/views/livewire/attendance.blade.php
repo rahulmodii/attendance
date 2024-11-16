@@ -11,12 +11,12 @@
                         <h1 class="fw-semibold text-white text-center lh-lg mb-9">Easy
                             Attendance
                             <br>
-                            <span class="fw-bolder">Start Your Delivery</span>
+                            <span class="fw-bolder">Stay still for 10 sec when camera starts it will auto capture</span>
                         </h1>
                         <!--end::Title-->
                         <!--begin::Illustration-->
                         <div class="flex-grow-1 bgi-no-repeat bgi-size-contain bgi-position-x-center card-rounded-bottom h-200px mh-200px my-5 mb-lg-12"
-                            style="background-image:url('assets/media/svg/illustrations/easy/5.svg')">
+                            style="background-image:url('assets/media/svg/illustrations/easy/undraw_taking_selfie_re_wlgd.svg')">
                         </div>
                         <!--end::Illustration-->
                     </div>
@@ -24,9 +24,9 @@
                     <!--begin::Links-->
 
                     <div class="text-center" id="canvasVideo" style="display: none">
-                        <video id="webcam" autoplay playsinline width="100%" height="300"></video>
+                        <video id="webcam" autoplay playsinline width="300px" height="300px"></video>
                         <canvas id="canvas" class="d-none"></canvas>
-                        <audio id="snapSound" src="audio/snap.wav" preload = "auto"></audio>
+                        {{-- <audio id="snapSound" src="audio/snap.wav" preload = "auto"></audio> --}}
                     </div>
                     <div class="text-center">
                         <button class="btn btn-sm bg-white btn-color-gray-800 me-2"

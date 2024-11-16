@@ -35,6 +35,7 @@ class Attendance extends Component
 
     public function setLiveImage($liveImage)
     {
+        // dd($liveImage);
         $auth = Auth::user();
         // dd($auth);
         $precheck = AttendanceSession::where(['date' => Carbon::today()->format('Y-m-d'), 'user_id' => $auth->id])->whereNull('out_time')->latest()->first();
@@ -62,12 +63,13 @@ class Attendance extends Component
                 'in_time' => now()->toTimeString(),
                 'in_selfie' => $url,
             ]);
-
+            return $this->dispatch('message', 'Check In Done Succssfully!!');
         }
     }
 
     public function setLiveImageCheckout($liveImage)
     {
+        // dd($liveImage);
         $auth = Auth::user();
         $precheck = AttendanceSession::where(['date' => Carbon::today()->format('Y-m-d'), 'user_id' => $auth->id])->whereNull('out_time')->latest()->first();
         if (!$precheck) {
