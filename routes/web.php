@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\DayJob;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -21,6 +22,10 @@ Route::middleware(['auth'])->group(function () {
         return view('employee');
     })->name('employee');
 
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
     Route::get('/logout', function () {
         if (Auth::check()) {
             Auth::logout();
@@ -30,4 +35,8 @@ Route::middleware(['auth'])->group(function () {
             return redirect()->route('attendance');
         }
     })->name('logout');
+});
+
+Route::get('/test',function(){
+    DayJob::dispatch();
 });

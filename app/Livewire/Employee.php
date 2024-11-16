@@ -44,7 +44,7 @@ class Employee extends Component
     public function render()
     {
         $id = Auth::user()->id;
-        $data = User::where('parent_id', $id)->orderBy('id', 'desc')->paginate(1);
+        $data = User::where('parent_id', $id)->orderBy('id', 'desc')->paginate(5);
         return view('livewire.employee', compact('data'));
     }
 }

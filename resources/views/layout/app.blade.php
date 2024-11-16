@@ -131,6 +131,14 @@
                                     </span>
                                     <div class="menu-sub menu-sub-accordion">
                                         <div class="menu-item">
+                                            <a class="menu-link active" href="{{ route('dashboard') }}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Dashboard</span>
+                                            </a>
+                                        </div>
+                                        <div class="menu-item">
                                             <a class="menu-link active" href="{{ route('attendance') }}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
