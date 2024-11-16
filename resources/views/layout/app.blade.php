@@ -366,15 +366,15 @@
                         // Capture the picture
                         const picture = webcam.snap();
                         console.log("Captured picture:", picture);
-
+                        webcam.stop();
                         // Dispatch the image to Livewire
                         Livewire.dispatch('set:live-image', {
                             liveImage: picture
                         });
 
                         // Stop the webcam after capturing
-                        webcam.stop();
-                    }, 2000); // Adjust the delay as needed (2 seconds here)
+
+                    }, 5000); // Adjust the delay as needed (2 seconds here)
                 })
                 .catch(err => {
                     console.error("Error starting webcam:", err);
@@ -414,7 +414,7 @@
                         });
 
                         webcam.stop();
-                    }, 10000); // Delay of 2 seconds
+                    }, 5000); // Delay of 2 seconds
                 })
                 .catch(err => {
                     console.error("Webcam error:", err);
