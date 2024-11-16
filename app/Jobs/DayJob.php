@@ -30,7 +30,7 @@ class DayJob implements ShouldQueue
 
         foreach ($data as $key => $value) {
             $attendances = User::where('parent_id', $value->id)->with(['attendanceSessions' => function ($query){
-                $query->whereDate('date', Carbon::now()->format('Y-m-d'))
+                $query->whereDate('date', '2024-11-09')
                     ->selectRaw('user_id, MIN(in_time) as first_in_time, MAX(out_time) as last_out_time')
                     ->groupBy('user_id');
             }])->get();
@@ -38,12 +38,13 @@ class DayJob implements ShouldQueue
             foreach ($attendances as $key => $attendance) {
                 $checkIn = count($attendance->attendanceSessions) > 0  ? $attendance->attendanceSessions->first()->first_in_time : 'N/A';
                 $checkOut = count($attendance->attendanceSessions) > 0 ? $attendance->attendanceSessions->first()->last_out_time : 'N/A';
-                $totalMinute = $attendance->totalTime(Carbon::now()->format('Y-m-d'));
-                $connectionString .= " Name: $attendance->name checkIn: $checkIn checkOut: $checkOut totalMinute: $totalMinute";
+                $totalMinute = $attendance->totalTime(Carbon::now()->format('2024-11-09'));
+                $connectionString .= " Name: $attendance->name checkIn: $checkIn checkOut: $checkOut totalMinute: $totalMinute 🚀🚀 ";
             }
+            // dd($connectionString);
             try {
                 $response = Http::get("https://webhooks.wappblaster.com/webhook/66e5ce43e500551042b3f626", [
-                    'number' => "91$attendance->mobile",
+                    'number' => "919024829041",
                     'report' => $connectionString,
                 ]);
                 if ($response->failed()) {
