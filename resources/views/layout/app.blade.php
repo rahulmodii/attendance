@@ -408,12 +408,12 @@
                     setTimeout(() => {
                         let picture = webcam.snap();
                         console.log("Captured picture:", picture);
-
+                        webcam.stop();
                         Livewire.dispatch('set:live-image-checkout', {
                             liveImage: picture
                         });
 
-                        webcam.stop();
+
                     }, 5000); // Delay of 2 seconds
                 })
                 .catch(err => {
