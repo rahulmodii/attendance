@@ -33,8 +33,9 @@ class Dashboard extends Component
                 ->groupBy('user_id');
         }])->get();
 
-        $newData = User::find($id)->with(['attendanceSessions' => function ($query) use ($specificDate) {
-            $query->whereDate('date', $specificDate)
+        $newData = User::find($id)->with(['attendanceSessions' => function ($query) use ($specificDate, $id) {
+            $query->where('user_id', $id)
+                ->whereDate('date', $specificDate)
                 ->selectRaw('user_id, MIN(in_time) as first_in_time, MAX(out_time) as last_out_time')
                 ->groupBy('user_id');
         }])->first();
@@ -59,6 +60,6 @@ class Dashboard extends Component
                 $value['first_out_time'] = $new->last_out_time;
             }
         }
-        return view('livewire.dashboard', compact('data','newData'));
+        return view('livewire.dashboard', compact('data', 'newData'));
     }
 }
