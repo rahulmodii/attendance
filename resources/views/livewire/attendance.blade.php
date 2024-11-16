@@ -59,36 +59,7 @@
                 {{-- <span class="text-gray-500 mt-1 fw-semibold fs-6">{{ $latitude }} {{ $longitude }}</span> --}}
             </h3>
             <div class="card-toolbar">
-                <div class="d-flex flex-stack flex-wrap gap-4">
-                    <div class="d-flex align-items-center fw-bold">
-                        <div class="text-muted fs-7 me-2">Cateogry</div>
-                        <select
-                            class="form-select form-select-transparent text-gray-900 fs-7 lh-1 fw-bold py-0 ps-3 w-auto"
-                            data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px"
-                            data-placeholder="Select an option">
-                            <option></option>
-                            <option value="Show All" selected="selected">Show All
-                            </option>
-                            <option value="a">Category A</option>
-                            <option value="b">Category B</option>
-                        </select>
-                    </div>
-                    <div class="d-flex align-items-center fw-bold">
-                        <div class="text-muted fs-7 me-2">Status</div>
-                        <select
-                            class="form-select form-select-transparent text-gray-900 fs-7 lh-1 fw-bold py-0 ps-3 w-auto"
-                            data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px"
-                            data-placeholder="Select an option" data-kt-table-widget-5="filter_status">
-                            <option></option>
-                            <option value="Show All" selected="selected">Show All
-                            </option>
-                            <option value="In Stock">In Stock</option>
-                            <option value="Out of Stock">Out of Stock</option>
-                            <option value="Low Stock">Low Stock</option>
-                        </select>
-                    </div>
-                    {{-- <a href="apps/ecommerce/catalog/products.html" class="btn btn-light btn-sm">View Stock</a> --}}
-                </div>
+
             </div>
         </div>
         <div class="card-body">
