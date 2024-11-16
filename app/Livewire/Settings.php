@@ -32,7 +32,7 @@ class Settings extends Component
         $auth = Auth::user();
         $precheck = ModelsSettings::where('user_id', $auth->id)->first();
         if ($precheck) {
-            ModelsSettings::find($auth->id)->update(['latitude' => $this->latitude, 'longitude' => $this->longitude, 'radius' => $this->radius]);
+            ModelsSettings::where('user_id',$auth->id)->update(['latitude' => $this->latitude, 'longitude' => $this->longitude, 'radius' => $this->radius]);
             return $this->dispatch('message', 'Settings Updated Successfully!!');
         } else {
             ModelsSettings::create(['user_id' => $auth->id, 'latitude' => $this->latitude, 'longitude' => $this->longitude, 'radius' => $this->radius]);
