@@ -9,11 +9,14 @@ use Livewire\Component;
 class Settings extends Component
 {
 
-    public $name;
     public $mobile;
     public $latitude;
     public $longitude;
     public $radius;
+    public $name;
+    public $company_name;
+    public $in_time;
+    public $out_time;
 
     public function mount()
     {
@@ -24,18 +27,34 @@ class Settings extends Component
             $this->latitude = $precheck->latitude;
             $this->longitude = $precheck->longitude;
             $this->radius = $precheck->radius;
+            $this->name = $precheck->name;
+            $this->company_name = $precheck->company_name;
+            $this->in_time = $precheck->in_time;
+            $this->out_time = $precheck->out_time;
         }
     }
 
     public function save()
     {
+        $this->validate([
+            'name' => 'required',
+            'company_name' => 'required',
+            'radius' => 'required',
+            'longitude' => 'required',
+            'latitude' => 'required',
+            'out_time' => 'required',
+            'in_time' => 'required',
+
+        ]);
         $auth = Auth::user();
         $precheck = ModelsSettings::where('user_id', $auth->id)->first();
         if ($precheck) {
-            ModelsSettings::where('user_id',$auth->id)->update(['latitude' => $this->latitude, 'longitude' => $this->longitude, 'radius' => $this->radius]);
+            $auth->update(['name'=>$this->name]);
+            ModelsSettings::where('user_id', $auth->id)->update(['latitude' => $this->latitude, 'longitude' => $this->longitude, 'radius' => $this->radius, 'name' => $this->name, 'company_name' => $this->company_name, 'in_time' => $this->in_time, 'out_time' => $this->out_time]);
             return $this->dispatch('message', 'Settings Updated Successfully!!');
         } else {
-            ModelsSettings::create(['user_id' => $auth->id, 'latitude' => $this->latitude, 'longitude' => $this->longitude, 'radius' => $this->radius]);
+            $auth->update(['name'=>$this->name]);
+            ModelsSettings::create(['user_id' => $auth->id, 'latitude' => $this->latitude, 'longitude' => $this->longitude, 'radius' => $this->radius, 'name' => $this->name, 'company_name' => $this->company_name, 'in_time' => $this->in_time, 'out_time' => $this->out_time]);
             return $this->dispatch('message', 'Settings Create Successfully!!');
         }
     }

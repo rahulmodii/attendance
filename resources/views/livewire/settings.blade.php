@@ -20,6 +20,41 @@
                 <div class="card-body border-top p-9">
 
 
+                    <div class="row mb-6">
+                        <!--begin::Label-->
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                            <input type="text" name="company" class="form-control form-control-lg form-control-solid"
+                                placeholder="Name" wire:model='name'>
+                            @error('name')
+                                <div
+                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                    <div class="row mb-6">
+                        <!--begin::Label-->
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Company name</label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-lg-8 fv-row fv-plugins-icon-container">
+                            <input type="text" name="company" class="form-control form-control-lg form-control-solid"
+                                placeholder="Company name" wire:model='company_name'>
+                            @error('company_name')
+                                <div
+                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        <!--end::Col-->
+                    </div>
 
 
                     <div class="row mb-6">
@@ -35,9 +70,12 @@
                                     <input type="text" name="fname"
                                         class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                         placeholder="Latitude" wire:model='latitude'>
-                                    <div
-                                        class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                    </div>
+                                    @error('latitude')
+                                        <div
+                                            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <!--end::Col-->
                                 <!--begin::Col-->
@@ -45,9 +83,53 @@
                                     <input type="text" name="lname"
                                         class="form-control form-control-lg form-control-solid" placeholder="Longitude"
                                         wire:model='longitude'>
-                                    <div
-                                        class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                    </div>
+                                    @error('longitude')
+                                        <div
+                                            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <!--end::Col-->
+                            </div>
+                            <!--end::Row-->
+                        </div>
+                        <!--end::Col-->
+                    </div>
+
+                    <div class="row mb-6">
+                        <!--begin::Label-->
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Office Timing/Max
+                            timing</label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-lg-8">
+                            <!--begin::Row-->
+                            <div class="row">
+                                <!--begin::Col-->
+                                <div class="col-lg-6 fv-row fv-plugins-icon-container">
+                                    <input type="time" name="fname"
+                                        class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
+                                        placeholder="In time" wire:model='in_time'>
+                                    @error('in_time')
+                                        <div
+                                            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <!--end::Col-->
+                                <!--begin::Col-->
+                                <div class="col-lg-6 fv-row fv-plugins-icon-container">
+                                    <input type="time" name="lname"
+                                        class="form-control form-control-lg form-control-solid" placeholder="Out time"
+                                        wire:model='out_time'>
+                                    @error('out_time')
+                                        <div
+                                            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <!--end::Col-->
                             </div>
@@ -65,9 +147,12 @@
                         <div class="col-lg-8 fv-row fv-plugins-icon-container">
                             <input type="text" name="company" class="form-control form-control-lg form-control-solid"
                                 placeholder="Radius" wire:model='radius'>
-                            <div
-                                class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                            </div>
+                            @error('radius')
+                                <div
+                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <!--end::Col-->
                     </div>
