@@ -8,15 +8,16 @@
                     <!--begin::Heading-->
                     <div class="m-0">
                         <!--begin::Title-->
-                        <h1 class="fw-semibold text-white text-center lh-lg mb-9">Easy
-                            Attendance
+                        <h1 class="fw-semibold text-white text-center lh-lg mb-9">Submit Your Daily Attendance
                             <br>
                             <span class="fw-bolder">Stay still for 10 sec when camera starts it will auto capture</span>
+                            <br/>
+                            <span class="fw-bolder" style="font-weight: bold;color:black">Capture selfie only in office</span>
                         </h1>
                         <!--end::Title-->
                         <!--begin::Illustration-->
                         <div class="flex-grow-1 bgi-no-repeat bgi-size-contain bgi-position-x-center card-rounded-bottom h-200px mh-200px my-5 mb-lg-12"
-                            style="background-image:url('assets/media/svg/illustrations/easy/undraw_taking_selfie_re_wlgd.svg')">
+                            style="background-image:url('assets/media/svg/illustrations/easy/undraw_selfie_re_h9um.svg')">
                         </div>
                         <!--end::Illustration-->
                     </div>

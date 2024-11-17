@@ -2,15 +2,15 @@
     <div class="d-flex flex-lg-row-fluid">
         <div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100"> <img
                 class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
-                src="assets/media/auth/agency.png" alt="" /> <img
+                src="/assets/media/svg/illustrations/easy/undraw_selfie_re_h9um.svg" alt="" /> <img
                 class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
-                src="assets/media/auth/agency-dark.png" alt="" />
-            <h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">Fast, Efficient and Productive</h1>
-            <div class="text-gray-600 fs-base text-center fw-semibold">In this kind of post, <a href="#"
-                    class="opacity-75-hover text-primary me-1">the blogger</a>introduces a person they’ve interviewed
-                <br />and provides some background information about <a href="#"
-                    class="opacity-75-hover text-primary me-1">the interviewee</a>and their <br />work following this is
-                a transcript of the interview.
+                src="/assets/media/svg/illustrations/easy/undraw_selfie_re_h9um.svg" alt="" />
+            <h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">Wappblaster Attendance Management</h1>
+            <div class="text-gray-600 fs-base text-center fw-semibold">
+                <span> Staff attendance with selfie and location wise.</span><br/>
+                <span> Get daily <a href="">Whatsapp report</a> with precise in out timing of all the
+                    employees</span>
+
             </div>
         </div>
     </div>
@@ -21,11 +21,19 @@
                     <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
                         data-kt-redirect-url="index.html" action="#">
                         <div class="text-center mb-11">
-                            <h1 class="text-gray-900 fw-bolder mb-3">Attendance Management</h1>
+                            <h1 class="text-gray-900 fw-bolder mb-3">Wappblaster Attendance Management</h1>
                             {{-- <div class="text-gray-500 fw-semibold fs-6">Your Login</div> --}}
                         </div>
                         <div class="separator separator-content my-14"> <span
-                                class="w-125px text-gray-500 fw-semibold fs-7">Login</span> </div>
+                                class="w-125px text-gray-bold fw-semibold fs-7">Login</span>
+                        </div>
+                        <div class="fv-row mb-8">
+                            <select class="form-control form-select" wire:model='country_code'>
+                               @foreach ($countryList as $key => $country)
+                                <option value="{{ $key }}">{{ $key }} {{ $country }}</option>
+                               @endforeach
+                            </select>
+                        </div>
                         <div class="fv-row mb-8">
                             <input type="text" placeholder="Mobile" name="mobile" autocomplete="off"
                                 class="form-control bg-transparent" wire:model='mobile' />

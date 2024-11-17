@@ -58,9 +58,9 @@
                             <i class="ki-outline ki-abstract-14 fs-2"></i>
                         </div>
                         <a href="index.html">
-                            <img alt="Logo" src="/assets/media/logos/demo55-small.svg"
+                            <img alt="Logo" src="/assets/media/logo.png"
                                 class="h-25px theme-light-show" />
-                            <img alt="Logo" src="/assets/media/logos/demo55-small-dark.svg"
+                            <img alt="Logo" src="/assets/media/logo.png"
                                 class="h-25px theme-dark-show" />
                         </a>
                     </div>
@@ -75,21 +75,6 @@
                                 <i class="ki-outline ki-notification-on fs-2"></i>
                             </div>
                         </div>
-                        <div class="app-navbar-item ms-1 ms-md-3">
-                            <div class="btn btn-icon btn-custom btn-color-gray-500 btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px position-relative"
-                                id="kt_drawer_chat_toggle">
-                                <i class="ki-outline ki-messages fs-2"></i>
-                                <span
-                                    class="position-absolute top-0 start-100 translate-middle badge badge-circle badge-custom mt-1 ms-n1">5</span>
-                            </div>
-                        </div>
-                        <div class="app-navbar-item ms-1 ms-md-3">
-                            <div class="btn btn-icon btn-custom btn-color-gray-500 btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px"
-                                data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
-                                data-kt-menu-placement="bottom-end">
-                                <i class="ki-outline ki-setting-3 fs-2"></i>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -101,11 +86,11 @@
                     data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
                     <div class="app-sidebar-logo flex-shrink-0 d-none d-md-flex flex-center align-items-center"
                         id="kt_app_sidebar_logo">
-                        <a href="index.html">
-                            <img alt="Logo" src="/assets/media/logos/demo55.svg"
-                                class="h-25px d-none d-sm-inline app-sidebar-logo-default theme-light-show" />
-                            <img alt="Logo" src="/assets/media/logos/demo55-dark.svg"
-                                class="h-25px theme-dark-show" />
+                        <a href="/">
+                            <img alt="Logo" src="/assets/media/logo.png"
+                                class="h-90px d-none d-sm-inline app-sidebar-logo-default theme-light-show" />
+                            <img alt="Logo" src="/assets/media/logo.png"
+                                class="h-90px theme-dark-show" />
                         </a>
                         <div class="d-flex align-items-center d-lg-none ms-n3 me-1" title="Show aside menu">
                             <div class="btn btn-icon btn-active-color-primary w-30px h-30px"
@@ -174,7 +159,7 @@
                                 data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-overflow="true"
                                 data-kt-menu-placement="top-start">
                                 <div class="d-flex flex-center cursor-pointer symbol symbol-circle symbol-40px">
-                                    <img src="/assets/media/avatars/300-1.jpg" alt="image" />
+                                    <img src="/assets/media/logo.png" alt="image" />
                                 </div>
                                 <div class="d-flex flex-column align-items-start justify-content-center ms-3">
                                     <span class="text-gray-500 fs-8 fw-semibold">Hello</span>
@@ -187,7 +172,7 @@
                                 <div class="menu-item px-3">
                                     <div class="menu-content d-flex align-items-center px-3">
                                         <div class="symbol symbol-50px me-5">
-                                            <img alt="Logo" src="/assets/media/avatars/300-1.jpg" />
+                                            <img alt="Logo" src="/assets/media/logo.png" />
                                         </div>
                                         <div class="d-flex flex-column">
                                             <div class="fw-bold d-flex align-items-center fs-5">
@@ -199,10 +184,6 @@
                                                 class="fw-semibold text-muted text-hover-primary fs-7">{{ auth()->user()->mobile ?? '' }}</a>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="separator my-2"></div>
-                                <div class="menu-item px-5">
-                                    <a href="{{ route('settings') }}" class="menu-link px-5">My Profile</a>
                                 </div>
                                 <div class="separator my-2"></div>
                                 <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
@@ -313,11 +294,6 @@
                         const lat = position.coords.latitude;
                         const lng = position.coords.longitude;
 
-
-                        // Call Livewire component method to update the location
-                        // console.log(lat, lng)
-                        // Livewire.emit('sendLocation', lat, lng);
-                        // $wire.dispatch('sendLocation');
                         Livewire.dispatch('set:latitude-longitude', {
                             latitude: lat,
                             longitude: lng

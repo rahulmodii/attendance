@@ -25,6 +25,8 @@ class User extends Authenticatable
         'parent_id',
         'mobile',
         'whatsapp',
+        'country_code',
+        'referal_id',
     ];
 
     /**
