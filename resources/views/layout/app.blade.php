@@ -66,7 +66,24 @@
                     </div>
                     <div class="app-navbar flex-lg-grow-1" id="kt_app_header_navbar">
                         <div class="app-navbar-item d-flex align-items-stretch flex-lg-grow-1 me-1 me-lg-0">
-
+                            <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6" style="width: 100%">
+                                <!--begin::Icon-->
+                                <i class="ki-outline ki-bank fs-2tx text-primary me-4"></i>
+                                <!--end::Icon-->
+                                <!--begin::Wrapper-->
+                                <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+                                    <!--begin::Content-->
+                                    <div class="mb-3 mb-md-0 fw-semibold">
+                                        <h4 class="text-gray-900 fw-bold">Your Plan will expire on {{ auth()->user()->expiry_date }}</h4>
+                                        <div class="fs-6 text-gray-700 pe-7">Upgrade your plan for continue access</div>
+                                    </div>
+                                    <!--end::Content-->
+                                    <!--begin::Action-->
+                                    <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap">Upgrade Now</a>
+                                    <!--end::Action-->
+                                </div>
+                                <!--end::Wrapper-->
+                            </div>
                         </div>
                         <div class="app-navbar-item ms-1 ms-md-3">
                             <div class="btn btn-icon btn-custom btn-color-gray-500 btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px"
