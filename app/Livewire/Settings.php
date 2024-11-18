@@ -52,6 +52,10 @@ class Settings extends Component
         }
     }
 
+    public function getLocation(){
+        dd("here");
+    }
+
     public function save()
     {
         $this->validate([

@@ -66,7 +66,7 @@
                             <!--begin::Row-->
                             <div class="row">
                                 <!--begin::Col-->
-                                <div class="col-lg-6 fv-row fv-plugins-icon-container">
+                                <div class="col-lg-4 fv-row fv-plugins-icon-container">
                                     <input type="text" name="fname"
                                         class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
                                         placeholder="Latitude" wire:model='latitude'>
@@ -79,7 +79,7 @@
                                 </div>
                                 <!--end::Col-->
                                 <!--begin::Col-->
-                                <div class="col-lg-6 fv-row fv-plugins-icon-container">
+                                <div class="col-lg-4 fv-row fv-plugins-icon-container">
                                     <input type="text" name="lname"
                                         class="form-control form-control-lg form-control-solid" placeholder="Longitude"
                                         wire:model='longitude'>
@@ -90,6 +90,10 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <div class="col-lg-4 fv-row fv-plugins-icon-container">
+                                    <button class="btn btn-primary" wire:click='getLocation()'>Get Location</button>
+                                </div>
+
                                 <!--end::Col-->
                             </div>
                             <!--end::Row-->

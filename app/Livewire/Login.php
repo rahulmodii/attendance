@@ -30,27 +30,27 @@ class Login extends Component
             "93" => "Afghanistan",
             "355" => "Albania",
             "213" => "Algeria",
-            "1-684" => "American Samoa",
+            "1" => "American Samoa",
             "376" => "Andorra",
             "244" => "Angola",
-            "1-264" => "Anguilla",
+            "1" => "Anguilla",
             "672" => "Antarctica",
-            "1-268" => "Antigua and Barbuda",
+            "1" => "Antigua and Barbuda",
             "54" => "Argentina",
             "374" => "Armenia",
             "297" => "Aruba",
             "61" => "Australia",
             "43" => "Austria",
             "994" => "Azerbaijan",
-            "1-242" => "Bahamas",
+            "1" => "Bahamas",
             "973" => "Bahrain",
             "880" => "Bangladesh",
-            "1-246" => "Barbados",
+            "1" => "Barbados",
             "375" => "Belarus",
             "32" => "Belgium",
             "501" => "Belize",
             "229" => "Benin",
-            "1-441" => "Bermuda",
+            "1" => "Bermuda",
             "975" => "Bhutan",
             "591" => "Bolivia",
             "387" => "Bosnia and Herzegovina",
@@ -65,7 +65,7 @@ class Login extends Component
             "237" => "Cameroon",
             "1" => "Canada",
             "238" => "Cape Verde",
-            "1-345" => "Cayman Islands",
+            "1" => "Cayman Islands",
             "236" => "Central African Republic",
             "235" => "Chad",
             "56" => "Chile",
@@ -84,10 +84,10 @@ class Login extends Component
             "243" => "Democratic Republic of the Congo",
             "45" => "Denmark",
             "253" => "Djibouti",
-            "1-767" => "Dominica",
-            "1-809" => "Dominican Republic",
-            "1-829" => "Dominican Republic",
-            "1-849" => "Dominican Republic",
+            "1" => "Dominica",
+            "1" => "Dominican Republic",
+            "1" => "Dominican Republic",
+            "1" => "Dominican Republic",
             "593" => "Ecuador",
             "20" => "Egypt",
             "503" => "El Salvador",
@@ -110,11 +110,11 @@ class Login extends Component
             "350" => "Gibraltar",
             "30" => "Greece",
             "299" => "Greenland",
-            "1-473" => "Grenada",
+            "1" => "Grenada",
             "590" => "Guadeloupe",
-            "1-671" => "Guam",
+            "1" => "Guam",
             "502" => "Guatemala",
-            "44-1481" => "Guernsey",
+            "44" => "Guernsey",
             "224" => "Guinea",
             "245" => "Guinea-Bissau",
             "592" => "Guyana",
@@ -127,13 +127,13 @@ class Login extends Component
             "98" => "Iran",
             "964" => "Iraq",
             "353" => "Ireland",
-            "44-1624" => "Isle of Man",
+            "44" => "Isle of Man",
             "972" => "Israel",
             "39" => "Italy",
             "225" => "Ivory Coast",
-            "1-876" => "Jamaica",
+            "1" => "Jamaica",
             "81" => "Japan",
-            "44-1534" => "Jersey",
+            "44" => "Jersey",
             "962" => "Jordan",
             "7" => "Kazakhstan",
             "254" => "Kenya",
@@ -169,7 +169,7 @@ class Login extends Component
             "377" => "Monaco",
             "976" => "Mongolia",
             "382" => "Montenegro",
-            "1-664" => "Montserrat",
+            "1" => "Montserrat",
             "212" => "Morocco",
             "258" => "Mozambique",
             "95" => "Myanmar",
@@ -186,7 +186,7 @@ class Login extends Component
             "683" => "Niue",
             "672" => "Norfolk Island",
             "850" => "North Korea",
-            "1-670" => "Northern Mariana Islands",
+            "1" => "Northern Mariana Islands",
             "47" => "Norway",
             "968" => "Oman",
             "92" => "Pakistan",
@@ -199,8 +199,8 @@ class Login extends Component
             "63" => "Philippines",
             "48" => "Poland",
             "351" => "Portugal",
-            "1-787" => "Puerto Rico",
-            "1-939" => "Puerto Rico",
+            "1" => "Puerto Rico",
+            "1" => "Puerto Rico",
             "974" => "Qatar",
             "242" => "Republic of the Congo",
             "262" => "Reunion",
@@ -209,11 +209,11 @@ class Login extends Component
             "250" => "Rwanda",
             "590" => "Saint Barthelemy",
             "290" => "Saint Helena",
-            "1-869" => "Saint Kitts and Nevis",
-            "1-758" => "Saint Lucia",
+            "1" => "Saint Kitts and Nevis",
+            "1" => "Saint Lucia",
             "590" => "Saint Martin",
             "508" => "Saint Pierre and Miquelon",
-            "1-784" => "Saint Vincent and the Grenadines",
+            "1" => "Saint Vincent and the Grenadines",
             "685" => "Samoa",
             "378" => "San Marino",
             "239" => "Sao Tome and Principe",
@@ -223,7 +223,7 @@ class Login extends Component
             "248" => "Seychelles",
             "232" => "Sierra Leone",
             "65" => "Singapore",
-            "1-721" => "Sint Maarten",
+            "1" => "Sint Maarten",
             "421" => "Slovakia",
             "386" => "Slovenia",
             "677" => "Solomon Islands",
@@ -248,11 +248,11 @@ class Login extends Component
             "228" => "Togo",
             "690" => "Tokelau",
             "676" => "Tonga",
-            "1-868" => "Trinidad and Tobago",
+            "1" => "Trinidad and Tobago",
             "216" => "Tunisia",
             "90" => "Turkey",
             "993" => "Turkmenistan",
-            "1-649" => "Turks and Caicos Islands",
+            "1" => "Turks and Caicos Islands",
             "688" => "Tuvalu",
             "256" => "Uganda",
             "380" => "Ukraine",
@@ -265,8 +265,8 @@ class Login extends Component
             "379" => "Vatican",
             "58" => "Venezuela",
             "84" => "Vietnam",
-            "1-284" => "British Virgin Islands",
-            "1-340" => "United States Virgin Islands",
+            "1" => "British Virgin Islands",
+            "1" => "United States Virgin Islands",
             "681" => "Wallis and Futuna",
             "212" => "Western Sahara",
             "967" => "Yemen",
@@ -302,18 +302,22 @@ class Login extends Component
 
                     return redirect()->route('attendance');
                 } else {
-                    $splitString = explode('#', $this->referral_code);
-                    $referId = User::where(['mobile' => $splitString[1], 'country_code' => $splitString[0]])->first();
-                    $auth = User::create(['name' => Str::random(8), 'email' => "$this->country_code $this->mobile@mailsac.com", 'mobile' => $this->mobile, 'password' => Hash::make($this->mobile), 'role' => 1, 'country_code' => $this->country_code, 'referal_id' => $referId->id]);
-                    Auth::login($auth, true);
-                    $id = Auth::user()->id;
-                    if (auth()->user()->role == 1) {
-                        $checkSettings = Settings::where('user_id', $id)->first();
-                        if (!$checkSettings) {
-                            return redirect()->route('settings');
+                    $referId = User::where(['mobile' => $this->referral_code])->first();
+                    if ($referId) {
+                        $auth = User::create(['name' => Str::random(8), 'email' => "$this->country_code $this->mobile@mailsac.com", 'mobile' => $this->mobile, 'password' => Hash::make($this->mobile), 'role' => 1, 'country_code' => $this->country_code, 'referal_id' => $referId->id]);
+                        Auth::login($auth, true);
+                        $id = Auth::user()->id;
+                        if (auth()->user()->role == 1) {
+                            $checkSettings = Settings::where('user_id', $id)->first();
+                            if (!$checkSettings) {
+                                return redirect()->route('settings');
+                            }
                         }
+                        return redirect()->route('attendance');
+                    }else{
+                        return $this->dispatch('message', 'Invalid Referal Code');
                     }
-                    return redirect()->route('attendance');
+
                 }
             } else {
                 return $this->dispatch('message', 'Wrong Otp');

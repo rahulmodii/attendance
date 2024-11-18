@@ -19,8 +19,7 @@
                     <p class="fs-6 fw-semibold text-gray-600 py-4 m-0">Plan your blog post by choosing a topic, creating an outline conduct
                     <br>research, and checking facts</p>
                     <div class="d-flex">
-                        <input id="kt_referral_link_input" type="text" class="form-control form-control-solid me-3 flex-grow-1" name="search" value="{{ url('?referal=' . auth()->user()->country_code . '#' . auth()->user()->mobile) }}"
-                        >
+                        <input id="kt_referral_link_input" type="text" class="form-control form-control-solid me-3 flex-grow-1" name="search" value="{{ url('?referal=' . auth()->user()->mobile) }}">
                         <button id="kt_referral_program_link_copy_btn" class="btn btn-light btn-active-light-primary fw-bold flex-shrink-0" data-clipboard-target="#kt_referral_link_input">Copy Link</button>
                     </div>
                 </div>
