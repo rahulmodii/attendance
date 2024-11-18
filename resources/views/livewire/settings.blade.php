@@ -91,7 +91,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-lg-4 fv-row fv-plugins-icon-container">
-                                    <button class="btn btn-primary" wire:click='getLocation()'>Get Location</button>
+                                    <button type="button" class="btn btn-primary" wire:click='getLocation'>Get Location</button>
                                 </div>
 
                                 <!--end::Col-->

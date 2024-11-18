@@ -17,6 +17,8 @@ class Settings extends Component
     public $company_name;
     public $in_time;
     public $out_time;
+    public $currentLatitude;
+    public $currentLongitude;
 
     protected $listeners = [
         'set:latitude-longitude' => 'setLatitudeLongitude',
@@ -24,9 +26,11 @@ class Settings extends Component
 
     public function setLatitudeLongitude($latitude, $longitude)
     {
+        $this->currentLatitude = $latitude;
+        $this->currentLongitude = $longitude;
         $auth = Auth::user();
         $precheck = ModelsSettings::where('user_id', $auth->id)->first();
-        if (!$precheck) {
+        if ($precheck) {
             if (!$precheck->latitude && !$precheck->longitude) {
                 $this->latitude = $latitude;
                 $this->longitude = $longitude;
@@ -53,7 +57,8 @@ class Settings extends Component
     }
 
     public function getLocation(){
-        dd("here");
+        $this->latitude = $this->currentLatitude;
+        $this->longitude = $this->currentLongitude;
     }
 
     public function save()
