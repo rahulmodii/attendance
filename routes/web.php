@@ -26,6 +26,10 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
+    Route::get('/packages', function () {
+        return view('packages');
+    })->name('packages');
+
     Route::get('/logout', function () {
         if (Auth::check()) {
             Auth::logout();

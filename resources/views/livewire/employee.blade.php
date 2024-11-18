@@ -73,6 +73,21 @@
                                                     @enderror
                                                 </div>
                                                 <div class="fv-row mb-7 fv-plugins-icon-container">
+                                                    <label class="required fw-semibold fs-6 mb-2">Country Code</label>
+                                                    <div class="fv-row mb-8">
+                                                        <select class="form-control form-select" wire:model='country_code'>
+                                                           @foreach ($countryList as $key => $country)
+                                                            <option value="{{ $key }}">{{ $key }} {{ $country }}</option>
+                                                           @endforeach
+                                                        </select>
+                                                    </div>
+                                                    @error('country_code')
+                                                        <div
+                                                            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                                            {{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="fv-row mb-7 fv-plugins-icon-container">
                                                     <label class="required fw-semibold fs-6 mb-2">Mobile</label>
                                                     <input type="text" name="user_name"
                                                         class="form-control form-control-solid mb-3 mb-lg-0"
@@ -83,18 +98,7 @@
                                                             {{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                                <div class="fv-row mb-7 fv-plugins-icon-container">
-                                                    <label class="required fw-semibold fs-6 mb-2">Whatsapp
-                                                        Mobile</label>
-                                                    <input type="text" name="user_name"
-                                                        class="form-control form-control-solid mb-3 mb-lg-0"
-                                                        placeholder="Whatsapp" wire:model='whatsapp'>
-                                                    @error('whatsapp')
-                                                        <div
-                                                            class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                                            {{ $message }}</div>
-                                                    @enderror
-                                                </div>
+
 
 
                                             </div>
@@ -124,7 +128,6 @@
                                     <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                         <th class="">Name</th>
                                         <th class="">Mobile</th>
-                                        <th class="">Whatsapp</th>
                                         <th class="">Role</th>
                                         <th class="">Joined Date</th>
                                     </tr>
@@ -136,10 +139,7 @@
                                                 {{ $value->name ?? '' }}
                                             </td>
                                             <td class="">
-                                                {{ $value->mobile ?? '' }}
-                                            </td>
-                                            <td class="">
-                                                {{ $value->whatsapp ?? '' }}
+                                              {{ $value->country_code ?? '' }}  {{ $value->mobile ?? '' }}
                                             </td>
                                             <td>Staff</td>
                                             <td>

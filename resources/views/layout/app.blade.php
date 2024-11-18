@@ -58,32 +58,37 @@
                             <i class="ki-outline ki-abstract-14 fs-2"></i>
                         </div>
                         <a href="index.html">
-                            <img alt="Logo" src="/assets/media/logo.png"
-                                class="h-25px theme-light-show" />
-                            <img alt="Logo" src="/assets/media/logo.png"
-                                class="h-25px theme-dark-show" />
+                            <img alt="Logo" src="/assets/media/logo.png" class="h-25px theme-light-show" />
+                            <img alt="Logo" src="/assets/media/logo.png" class="h-25px theme-dark-show" />
                         </a>
                     </div>
                     <div class="app-navbar flex-lg-grow-1" id="kt_app_header_navbar">
                         <div class="app-navbar-item d-flex align-items-stretch flex-lg-grow-1 me-1 me-lg-0">
-                            <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6" style="width: 100%">
-                                <!--begin::Icon-->
-                                <i class="ki-outline ki-bank fs-2tx text-primary me-4"></i>
-                                <!--end::Icon-->
-                                <!--begin::Wrapper-->
-                                <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
-                                    <!--begin::Content-->
-                                    <div class="mb-3 mb-md-0 fw-semibold">
-                                        <h4 class="text-gray-900 fw-bold">Your Plan will expire on {{ auth()->user()->expiry_date }}</h4>
-                                        <div class="fs-6 text-gray-700 pe-7">Upgrade your plan for continue access</div>
+                            @if (now()->diffInDays(auth()->user()->expiry_date, false) > 3)
+                                <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6"
+                                    style="width: 100%">
+                                    <!--begin::Icon-->
+                                    <i class="ki-outline ki-bank fs-2tx text-primary me-4"></i>
+                                    <!--end::Icon-->
+                                    <!--begin::Wrapper-->
+                                    <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+                                        <!--begin::Content-->
+                                        <div class="mb-3 mb-md-0 fw-semibold">
+                                            <h4 class="text-gray-900 fw-bold">Your Plan will expire on
+                                                {{ auth()->user()->expiry_date }}</h4>
+                                            <div class="fs-6 text-gray-700 pe-7">Upgrade your plan for continue access
+                                            </div>
+                                        </div>
+                                        <!--end::Content-->
+                                        <!--begin::Action-->
+                                        <a href="#"
+                                            class="btn btn-primary px-6 align-self-center text-nowrap">Upgrade Now</a>
+                                        <!--end::Action-->
                                     </div>
-                                    <!--end::Content-->
-                                    <!--begin::Action-->
-                                    <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap">Upgrade Now</a>
-                                    <!--end::Action-->
+                                    <!--end::Wrapper-->
                                 </div>
-                                <!--end::Wrapper-->
-                            </div>
+                            @endif
+
                         </div>
                         <div class="app-navbar-item ms-1 ms-md-3">
                             <div class="btn btn-icon btn-custom btn-color-gray-500 btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px"
@@ -106,8 +111,7 @@
                         <a href="/">
                             <img alt="Logo" src="/assets/media/logo.png"
                                 class="h-90px d-none d-sm-inline app-sidebar-logo-default theme-light-show" />
-                            <img alt="Logo" src="/assets/media/logo.png"
-                                class="h-90px theme-dark-show" />
+                            <img alt="Logo" src="/assets/media/logo.png" class="h-90px theme-dark-show" />
                         </a>
                         <div class="d-flex align-items-center d-lg-none ms-n3 me-1" title="Show aside menu">
                             <div class="btn btn-icon btn-active-color-primary w-30px h-30px"
@@ -148,22 +152,33 @@
                                                 <span class="menu-title">Attendance</span>
                                             </a>
                                         </div>
-                                        <div class="menu-item">
-                                            <a class="menu-link active" href="{{ route('settings') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Settings</span>
-                                            </a>
-                                        </div>
-                                        <div class="menu-item">
-                                            <a class="menu-link active" href="{{ route('employee') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Employee</span>
-                                            </a>
-                                        </div>
+                                        @if (auth()->user()->role == 1)
+                                            <div class="menu-item">
+                                                <a class="menu-link active" href="{{ route('settings') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Settings</span>
+                                                </a>
+                                            </div>
+                                            <div class="menu-item">
+                                                <a class="menu-link active" href="{{ route('employee') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Employee</span>
+                                                </a>
+                                            </div>
+                                            <div class="menu-item">
+                                                <a class="menu-link active" href="{{ route('packages') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Packages</span>
+                                                </a>
+                                            </div>
+                                        @endif
+
 
                                     </div>
                                 </div>
