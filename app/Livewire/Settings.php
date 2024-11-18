@@ -18,6 +18,24 @@ class Settings extends Component
     public $in_time;
     public $out_time;
 
+    protected $listeners = [
+        'set:latitude-longitude' => 'setLatitudeLongitude',
+    ];
+
+    public function setLatitudeLongitude($latitude, $longitude)
+    {
+        $auth = Auth::user();
+        $precheck = ModelsSettings::where('user_id', $auth->id)->first();
+        if (!$precheck) {
+            if (!$precheck->latitude && !$precheck->longitude) {
+                $this->latitude = $latitude;
+                $this->longitude = $longitude;
+            }
+
+        }
+
+    }
+
     public function mount()
     {
 
