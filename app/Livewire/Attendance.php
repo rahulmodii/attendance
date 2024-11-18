@@ -101,7 +101,11 @@ class Attendance extends Component
 
     public function calculateDistance()
     {
-        $setting = Settings::where('user_id', auth()->user()->id)->first();
+        $id = auth()->user()->id;
+        if (auth()->user()->role == 2) {
+           $id = auth()->user()->parent_id;
+        }
+        $setting = Settings::where('user_id', $id)->first();
 
         $originLatitude = $this->latitude;
         $originLongitude = $this->longitude;

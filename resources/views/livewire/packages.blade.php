@@ -126,48 +126,27 @@
                                                 <!--begin::Item-->
                                                 <div class="d-flex align-items-center mb-5">
                                                     <span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Up to
-                                                        30
-                                                        Project Integrations</span>
+                                                      In out report</span>
                                                     <i class="ki-outline ki-check-circle fs-1 text-success"></i>
                                                 </div>
                                                 <!--end::Item-->
                                                 <!--begin::Item-->
                                                 <div class="d-flex align-items-center mb-5">
                                                     <span
-                                                        class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Analytics
-                                                        Module</span>
+                                                        class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Daily whatsapp report</span>
                                                     <i class="ki-outline ki-check-circle fs-1 text-success"></i>
                                                 </div>
-                                                <!--end::Item-->
-                                                <!--begin::Item-->
                                                 <div class="d-flex align-items-center mb-5">
-                                                    <span class="fw-semibold fs-6 text-gray-600 flex-grow-1">Finance
-                                                        Module</span>
-                                                    <i class="ki-outline ki-cross-circle fs-1"></i>
+                                                    <span
+                                                        class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Location Based Authentication</span>
+                                                    <i class="ki-outline ki-check-circle fs-1 text-success"></i>
                                                 </div>
-                                                <!--end::Item-->
-                                                <!--begin::Item-->
                                                 <div class="d-flex align-items-center mb-5">
-                                                    <span class="fw-semibold fs-6 text-gray-600 flex-grow-1">Accounting
-                                                        Module</span>
-                                                    <i class="ki-outline ki-cross-circle fs-1"></i>
+                                                    <span
+                                                        class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Selfie Verfication</span>
+                                                    <i class="ki-outline ki-check-circle fs-1 text-success"></i>
                                                 </div>
-                                                <!--end::Item-->
-                                                <!--begin::Item-->
-                                                <div class="d-flex align-items-center mb-5">
-                                                    <span class="fw-semibold fs-6 text-gray-600 flex-grow-1">Network
-                                                        Platform</span>
-                                                    <i class="ki-outline ki-cross-circle fs-1"></i>
-                                                </div>
-                                                <!--end::Item-->
-                                                <!--begin::Item-->
-                                                <div class="d-flex align-items-center">
-                                                    <span class="fw-semibold fs-6 text-gray-600 flex-grow-1">Unlimited
-                                                        Cloud
-                                                        Space</span>
-                                                    <i class="ki-outline ki-cross-circle fs-1"></i>
-                                                </div>
-                                                <!--end::Item-->
+
                                             </div>
                                             <!--end::Features-->
                                             <!--begin::Select-->

@@ -7,7 +7,7 @@
                 src="/assets/media/svg/illustrations/easy/undraw_selfie_re_h9um.svg" alt="" />
             <h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">Wappblaster Attendance Management</h1>
             <div class="text-gray-600 fs-base text-center fw-semibold">
-                <span> Staff attendance with selfie and location wise.</span><br/>
+                <span> Staff attendance with selfie and location wise.</span><br />
                 <span> Get daily <a href="">Whatsapp report</a> with precise in out timing of all the
                     employees</span>
 
@@ -29,9 +29,9 @@
                         </div>
                         <div class="fv-row mb-8">
                             <select class="form-control form-select" wire:model='country_code'>
-                               @foreach ($countryList as $key => $country)
-                                <option value="{{ $key }}">{{ $key }} {{ $country }}</option>
-                               @endforeach
+                                @foreach ($countryList as $key => $country)
+                                    <option value="{{ $key }}">{{ $key }} {{ $country }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="fv-row mb-8">
@@ -43,6 +43,16 @@
                                 <input type="number" placeholder="Otp" name="otp" autocomplete="off"
                                     class="form-control bg-transparent" wire:model='otp' />
                             </div>
+                        @endif
+
+                        @if ($isNewUser)
+                            <div class="fv-row mb-3">
+                                <input type="text" placeholder="Referal Code" name="referral_code" autocomplete="off"
+                                    class="form-control bg-transparent" wire:model='referral_code' />
+                            </div>
+                            @error('referral_code')
+                            <span style="color: red"> {{ $message }}</span>
+                            @enderror
                         @endif
 
                         <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">

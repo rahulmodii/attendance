@@ -15,10 +15,12 @@ class Login extends Component
 {
 
     public $mobile;
-    public $country_code=91;
+    public $country_code = 91;
     public $otp;
     public $isSent = false;
 
+    public $isNewUser = false;
+    public $referral_code;
     public $countryList = [];
 
     public function mount()
@@ -271,10 +273,17 @@ class Login extends Component
             "260" => "Zambia",
             "263" => "Zimbabwe",
         ];
+
+        $this->referral_code = request()->query('referal');
     }
 
     public function sendOtp()
     {
+        if ($this->isNewUser) {
+            $this->validate([
+                'referral_code' => 'required',
+            ]);
+        }
         // dd($this->country_code);
         if ($this->isSent) {
             $checkVerification = Verification::where(['mobile' => $this->mobile, 'otp' => $this->otp, 'country_code' => $this->country_code])->first();
@@ -290,7 +299,9 @@ class Login extends Component
                     }
                     return redirect()->route('attendance');
                 } else {
-                    $auth = User::create(['name' => Str::random(8), 'email' => "$this->country_code$this->mobile@mailsac.com", 'mobile' => $this->mobile, 'password' => Hash::make($this->mobile), 'role' => 1, 'country_code' => $this->country_code]);
+                    $splitString = explode('#', $this->referral_code);
+                    $referId = User::where(['mobile' => $splitString[1], 'country_code' => $splitString[0]])->first();
+                    $auth = User::create(['name' => Str::random(8), 'email' => "$this->country_code $this->mobile@mailsac.com", 'mobile' => $this->mobile, 'password' => Hash::make($this->mobile), 'role' => 1, 'country_code' => $this->country_code, 'referal_id' => $referId->id]);
                     Auth::login($auth, true);
                     $id = Auth::user()->id;
                     $checkSettings = Settings::where('user_id', $id)->first();
@@ -304,8 +315,8 @@ class Login extends Component
             }
         } else {
             $localotp = rand(1000, 9999);
-            $mobile = "$this->country_code$this->mobile";
-            $this->otp = $localotp;
+            $mobile = "$this->country_code $this->mobile";
+            // $this->otp = $localotp;
             Verification::where(['mobile' => $this->mobile, 'country_code' => $this->country_code])->delete();
             Verification::create(['mobile' => $this->mobile, 'otp' => $localotp, 'country_code' => $this->country_code]);
             $url = 'https://webhooks.wappblaster.com/webhook/669b736a97d275a0b8012769';
@@ -314,6 +325,10 @@ class Login extends Component
                 'otp' => $localotp,
             ]);
             $this->isSent = true;
+            $check = User::where(['mobile' => $this->mobile, 'country_code' => $this->country_code])->first();
+            if (!$check) {
+                $this->isNewUser = true;
+            }
         }
 
     }

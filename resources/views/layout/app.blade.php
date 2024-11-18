@@ -64,7 +64,7 @@
                     </div>
                     <div class="app-navbar flex-lg-grow-1" id="kt_app_header_navbar">
                         <div class="app-navbar-item d-flex align-items-stretch flex-lg-grow-1 me-1 me-lg-0">
-                            @if (now()->diffInDays(auth()->user()->expiry_date, false) > 3)
+                            @if (now()->diffInDays(auth()->user()->expiry_date, false) < 3)
                                 <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6"
                                     style="width: 100%">
                                     <!--begin::Icon-->
@@ -81,7 +81,7 @@
                                         </div>
                                         <!--end::Content-->
                                         <!--begin::Action-->
-                                        <a href="#"
+                                        <a href="{{ route('packages') }}"
                                             class="btn btn-primary px-6 align-self-center text-nowrap">Upgrade Now</a>
                                         <!--end::Action-->
                                     </div>
@@ -175,6 +175,14 @@
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
                                                     <span class="menu-title">Packages</span>
+                                                </a>
+                                            </div>
+                                            <div class="menu-item">
+                                                <a class="menu-link active" href="{{ route('referral') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Referral</span>
                                                 </a>
                                             </div>
                                         @endif
@@ -316,6 +324,8 @@
     <script src="/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script type="text/javascript" src="/dist/webcam-easy.min.js"></script>
     <script type="text/javascript" src="/dist/snackbar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+
     @livewireScripts()
     <script>
         document.addEventListener('livewire:init', () => {
@@ -436,6 +446,22 @@
             $("#kt_modal_add_user").modal('hide')
         });
     </script>
+    <script>
+        // Initialize Clipboard.js
+        const clipboard = new ClipboardJS('#kt_referral_program_link_copy_btn');
+
+        // Success feedback
+        clipboard.on('success', function(e) {
+            alert('Copied to clipboard!');
+            e.clearSelection();
+        });
+
+        // Error feedback
+        clipboard.on('error', function(e) {
+            alert('Failed to copy. Please try again.');
+        });
+    </script>
+
 </body>
 
 </html>

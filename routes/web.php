@@ -30,6 +30,10 @@ Route::middleware(['auth'])->group(function () {
         return view('packages');
     })->name('packages');
 
+    Route::get('/referral', function () {
+        return view('referal');
+    })->name('referral');
+
     Route::get('/logout', function () {
         if (Auth::check()) {
             Auth::logout();
