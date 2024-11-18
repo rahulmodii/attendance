@@ -293,10 +293,13 @@ class Login extends Component
                 if ($preCheckUser) {
                     Auth::login($preCheckUser, true);
                     $id = Auth::user()->id;
-                    $checkSettings = Settings::where('user_id', $id)->first();
-                    if (!$checkSettings) {
-                        return redirect()->route('settings');
+                    if (auth()->user()->role == 1) {
+                        $checkSettings = Settings::where('user_id', $id)->first();
+                        if (!$checkSettings) {
+                            return redirect()->route('settings');
+                        }
                     }
+
                     return redirect()->route('attendance');
                 } else {
                     $splitString = explode('#', $this->referral_code);
@@ -304,9 +307,11 @@ class Login extends Component
                     $auth = User::create(['name' => Str::random(8), 'email' => "$this->country_code $this->mobile@mailsac.com", 'mobile' => $this->mobile, 'password' => Hash::make($this->mobile), 'role' => 1, 'country_code' => $this->country_code, 'referal_id' => $referId->id]);
                     Auth::login($auth, true);
                     $id = Auth::user()->id;
-                    $checkSettings = Settings::where('user_id', $id)->first();
-                    if (!$checkSettings) {
-                        return redirect()->route('settings');
+                    if (auth()->user()->role == 1) {
+                        $checkSettings = Settings::where('user_id', $id)->first();
+                        if (!$checkSettings) {
+                            return redirect()->route('settings');
+                        }
                     }
                     return redirect()->route('attendance');
                 }

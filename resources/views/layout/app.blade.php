@@ -11,9 +11,9 @@
     <meta property="og:type" content="article" />
     <meta property="og:title" content="" />
     <meta property="og:url" content="" />
-    <meta property="og:site_name" content="Metronic by Keenthemes" />
+    <meta property="og:site_name" content="" />
     <link rel="canonical" href="" />
-    <link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link href="/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
     <link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
@@ -76,8 +76,7 @@
                                         <div class="mb-3 mb-md-0 fw-semibold">
                                             <h4 class="text-gray-900 fw-bold">Your Plan will expire on
                                                 {{ auth()->user()->expiry_date }}</h4>
-                                            <div class="fs-6 text-gray-700 pe-7">Upgrade your plan for continue access
-                                            </div>
+
                                         </div>
                                         <!--end::Content-->
                                         <!--begin::Action-->
