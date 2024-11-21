@@ -128,6 +128,7 @@
                         <thead class="border-bottom border-gray-200 fs-6 fw-bold bg-lighten">
                             <tr>
                                 {{-- <th class="min-w-125px ps-9">Order ID</th> --}}
+                                <th class="min-w-125px  ps-9">Parent Name</th>
                                 <th class="min-w-125px  ps-9">User Name</th>
                                 <th class="min-w-125px">Date</th>
                                 <th class="min-w-125px">User Mobile</th>
@@ -137,8 +138,10 @@
                         <!--end::Thead-->
                         <!--begin::Tbody-->
                         <tbody class="fs-6 fw-semibold text-gray-600">
-                            @foreach ($secondLevel as $value)
+                            @foreach ($secondLevel as $key => $value)
                             <tr>
+
+                                <td class="ps-9">{{ $secondLevelName[$key] ?? '' }}</td>
                                 <td class="ps-9">{{ $value->name ?? '' }}</td>
                                 <td class="ps-9">{{ $value->created_at->format('d-m-Y') }}</td>
                                 <td class="ps-9">{{ $value->country_code  ?? ''}}{{ $value->mobile ?? '' }}</td>
