@@ -27,6 +27,9 @@ class User extends Authenticatable
         'whatsapp',
         'country_code',
         'referal_id',
+        'wallet_balance',
+        'is_blocked',
+        'expiry_date'
     ];
 
     /**

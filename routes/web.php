@@ -34,6 +34,10 @@ Route::middleware(['auth'])->group(function () {
         return view('referal');
     })->name('referral');
 
+    Route::get('/wallet', function () {
+        return view('wallet');
+    })->name('wallet');
+
     Route::get('/logout', function () {
         if (Auth::check()) {
             Auth::logout();

@@ -325,14 +325,14 @@ class Login extends Component
         } else {
             $localotp = rand(1000, 9999);
             $mobile = "$this->country_code $this->mobile";
-            // $this->otp = $localotp;
+            $this->otp = $localotp;
             Verification::where(['mobile' => $this->mobile, 'country_code' => $this->country_code])->delete();
             Verification::create(['mobile' => $this->mobile, 'otp' => $localotp, 'country_code' => $this->country_code]);
             $url = 'https://webhooks.wappblaster.com/webhook/669b736a97d275a0b8012769';
-            $response = Http::get($url, [
-                'number' => $mobile,
-                'otp' => $localotp,
-            ]);
+            // $response = Http::get($url, [
+            //     'number' => $mobile,
+            //     'otp' => $localotp,
+            // ]);
             $this->isSent = true;
             $check = User::where(['mobile' => $this->mobile, 'country_code' => $this->country_code])->first();
             if (!$check) {
