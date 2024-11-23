@@ -150,7 +150,7 @@
                                             </div>
                                             <!--end::Features-->
                                             <!--begin::Select-->
-                                            <a href="#" class="btn btn-sm btn-primary">Select</a>
+                                            <a wire:click='recharge({{ $key + 1 }})' class="btn btn-sm btn-primary">Select</a>
                                             <!--end::Select-->
                                         </div>
                                         <!--end::Option-->

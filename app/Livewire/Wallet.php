@@ -71,6 +71,7 @@ class Wallet extends Component
     {
         $id = auth()->user()->id;
         $totalRefered = User::where('parent_id', $id)->count();
-        return view('livewire.wallet', compact('totalRefered'));
+        $data = ModelsWallet::where('user_id',$id)->get();
+        return view('livewire.wallet', compact('totalRefered','data'));
     }
 }
