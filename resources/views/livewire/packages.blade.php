@@ -77,16 +77,8 @@
                         <!--begin::Row-->
                         <div class="row g-10">
                             <!--begin::Col-->
-                            @php
-                                $data = [
-                                    ['package' => 'package1', 'price' => 2000, 'member' => '1 - 10'],
-                                    ['package' => 'package2', 'price' => 3000, 'member' => '10 - 20'],
-                                    ['package' => 'package3', 'price' => 4000, 'member' => '20 - 30'],
-                                    ['package' => 'package4', 'price' => 5000, 'member' => '30 - 40'],
-                                ];
-                            @endphp
-                            @foreach ($data as $key => $value)
-                                <div class="col-xl-4">
+                            @foreach ($packages as $key => $value)
+                                <div class="col-xl-3">
                                     <div class="d-flex h-100 align-items-center">
                                         <!--begin::Option-->
                                         <div
@@ -94,10 +86,10 @@
                                             <!--begin::Heading-->
                                             <div class="mb-7 text-center">
                                                 <!--begin::Title-->
-                                                <h1 class="text-gray-900 mb-5 fw-bolder">{{ $value['package'] }}</h1>
+                                                <h1 class="text-gray-900 mb-5 fw-bolder">{{ $value->package_name ?? ''}}</h1>
                                                 <!--end::Title-->
                                                 <!--begin::Description-->
-                                                <div class="text-gray-600 fw-semibold mb-5">Optimal for {{ $value['member'] }} team size
+                                                <div class="text-gray-600 fw-semibold mb-5">Optimal for {{ $value->min_staff ?? '' }} - {{ $value->max_staff ?? '' }} team size
                                                     <br>and new startup
                                                 </div>
                                                 <!--end::Description-->
@@ -106,7 +98,7 @@
                                                     <span class="mb-2 text-primary">Rs</span>
                                                     <span class="fs-3x fw-bold text-primary"
                                                         data-kt-plan-price-month="39"
-                                                        data-kt-plan-price-annual="399">{{ $value['price'] }}</span>
+                                                        data-kt-plan-price-annual="399">{{ $value->amount ?? '' }}</span>
                                                     <span class="fs-7 fw-semibold opacity-50">/
                                                         <span data-kt-element="period">Mon</span></span>
                                                 </div>
@@ -150,7 +142,7 @@
                                             </div>
                                             <!--end::Features-->
                                             <!--begin::Select-->
-                                            <a wire:click='recharge({{ $key + 1 }})' class="btn btn-sm btn-primary">Select</a>
+                                            <a wire:click="recharge('{{encrypt($value->id)}}')" class="btn btn-sm btn-primary">Select</a>
                                             <!--end::Select-->
                                         </div>
                                         <!--end::Option-->

@@ -1,6 +1,7 @@
 <?php
 
 use App\Jobs\DayJob;
+use App\Models\Packages;
 use App\Models\Recharge;
 use App\Models\User;
 use App\Models\Wallet;
@@ -15,6 +16,18 @@ Route::get('/', function () {
     return view('login');
 })->name('login');
 
+Route::get('/packages-create',function(){
+    // id, package_name, amount, max_staff, status, created_at, updated_at
+    $packages = [
+        ['package_name' => 'Bronze', 'amount' => 2000, 'min_staff' => 1, 'max_staff' => 10, 'status' => 1],
+        ['package_name' => 'Silver', 'amount' => 3000, 'min_staff' => 10, 'max_staff' => 20, 'status' => 1],
+        ['package_name' => 'Gold', 'amount' => 4000, 'min_staff' => 20, 'max_staff' => 30, 'status' => 1],
+        ['package_name' => 'Platinum', 'amount' => 5000, 'min_staff' => 30, 'max_staff' => 40, 'status' => 1],
+    ];
+
+    Packages::insert($packages);
+});
+
 Route::get('/testpayment',function(){
 
 
@@ -26,8 +39,8 @@ Route::get('/testpayment',function(){
         'amount' => '10',
         'phone' => '919024829041',
         'buyer_name' => 'rahul',
-        'redirect_url' =>'https://79ac-205-254-163-52.ngrok-free.app/redirect',
-        'webhook' => 'https://79ac-205-254-163-52.ngrok-free.app/webhook',
+        'redirect_url' =>'https://8871-205-254-163-52.ngrok-free.app/redirect',
+        'webhook' => 'https://8871-205-254-163-52.ngrok-free.app/webhook',
         'send_email' => false,
         'send_sms' => false,
         'email' => 'foo@example.com',
@@ -48,50 +61,8 @@ Route::get('/redirect',function(Request $request){
         ])->get("https://www.instamojo.com/api/1.1/payments/$paymentId/");
 
         $res = json_decode($response->body(),true);
-        $id = Auth::user()->id;
-        User::find($id)->update([
-            'package_id' => $checkCoupon->package_id,
-            'expiry_date' => Carbon::now()->addYear(1)->format('Y-m-d'),
-        ]);
-        $checkCoupon->update([
-            'used_by' => $id,
-            'is_used' => 1,
-        ]);
-
-        $parentId = User::find($id)->parent_id;
-        $firstParent = User::find($parentId);
-        $firstParentIds = $firstParent->id;
-        if ($firstParent) {
-            $referalAmount = round($checkCoupon->amount * 0.5);
-            Recharge::create([
-                'user_id' => $parentId,
-                'current_balance' => $firstParent->wallet_balance + $referalAmount,
-                'previous_balance' => $firstParent->wallet_balance,
-                'type' => 1,
-                'amount' => $referalAmount,
-                'coupon_used_id' => $checkCoupon->id,
-                'coupon_used_string' => $checkCoupon->coupon,
-                'account_source' => 1,
-                'used_by_name'=> auth()->user()->name
-            ]);
-            $firstParent->update(['wallet_balance' => $firstParent->wallet_balance + $referalAmount]);
-            $firstParentId = User::find($firstParentIds);
-            $secondParent = User::find($firstParentId->parent_id);
-            $referalAmountNew = round($checkCoupon->amount * 0.15);
-            Recharge::create([
-                'user_id' => $secondParent->id,
-                'current_balance' => $secondParent->wallet_balance + $referalAmountNew,
-                'previous_balance' => $secondParent->wallet_balance,
-                'type' => 1,
-                'amount' => $referalAmountNew,
-                'coupon_used_id' => $checkCoupon->id,
-                'coupon_used_string' => $checkCoupon->coupon,
-                'account_source' => 1,
-                'used_by_name'=> auth()->user()->name
-            ]);
-            $secondParent->increment('wallet_balance', $referalAmountNew);
-        }
         dd($res);
+
 });
 
 Route::post('/webhook',function(Request $request){
