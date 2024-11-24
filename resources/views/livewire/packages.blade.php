@@ -61,14 +61,14 @@
                     <!--begin::Plans-->
                     <div class="d-flex flex-column">
                         <!--begin::Heading-->
-                        <div class="mb-13 text-center">
+                        <div class="mb-1 text-center">
                             <h1 class="fs-2hx fw-bold mb-5">Choose Your Plan</h1>
                             <div class="text-gray-600 fw-semibold fs-5"></div>
                             <select class="form-select form-select-solid" data-control="select2"
                                 data-placeholder="Seller Annual Fee" data-hide-search="true"
                                 data-select2-id="select2-data-7-0fji" tabindex="-1" aria-hidden="true"
-                                data-kt-initialized="1" wire:model='otherPersonRechargeId'>
-                                <option value="">--Self--</option>
+                                data-kt-initialized="1" wire:model.live='rechargeuserId'>
+                                <option value="{{ auth()->user()->id }}">--Self--</option>
                                 @foreach ($referals as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
@@ -78,8 +78,8 @@
                         <!--begin::Nav group-->
                         <div class="nav-group nav-group-outline mx-auto mb-15" data-kt-buttons="true"
                             data-kt-initialized="1">
-                            <button class="btn btn-color-gray-600 btn-active btn-active-secondary px-6 py-3 me-2 active"
-                                data-kt-plan="month">Monthly</button>
+                            {{-- <button class="btn btn-color-gray-600 btn-active btn-active-secondary px-6 py-3 me-2 active"
+                                data-kt-plan="month">Monthly</button> --}}
                             {{-- <button class="btn btn-color-gray-600 btn-active btn-active-secondary px-6 py-3" data-kt-plan="annual">Annual</button> --}}
                         </div>
                         <!--end::Nav group-->
@@ -110,7 +110,7 @@
                                                     <span class="mb-2 text-primary">Rs</span>
                                                     <span class="fs-3x fw-bold text-primary"
                                                         data-kt-plan-price-month="39"
-                                                        data-kt-plan-price-annual="399">{{ $value->amount ?? '' }}</span>
+                                                        data-kt-plan-price-annual="399">{{ $rechargeForOther ? $value->other_amount : $value->amount  }}</span>
                                                     <span class="fs-7 fw-semibold opacity-50">/
                                                         <span data-kt-element="period">Mon</span></span>
                                                 </div>

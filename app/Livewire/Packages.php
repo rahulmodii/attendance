@@ -11,13 +11,33 @@ use Livewire\Component;
 
 class Packages extends Component
 {
-    public $otherPersonRechargeId = null;
+    public $rechargeuserId;
+
+    public $rechargeForOther = false;
+
+    public function mount()
+    {
+        $id = Auth::user()->id;
+        $this->rechargeuserId = $id;
+    }
+
+    public function updatedRechargeuserId()
+    {
+        // dd($this->rechargeuserId);
+        $id = Auth::user()->id;
+        if ($this->rechargeuserId == $id) {
+            $this->rechargeForOther = false;
+        } else {
+            $this->rechargeForOther = true;
+        }
+
+    }
 
     public function recharge($id)
     {
         $packageId = decrypt($id);
         $auth = Auth::user();
-        $authId = $auth->id;
+        $authId = $this->rechargeForOther ? $this->rechargeuserId : $auth->id;
         $mobile = $auth->mobile;
         $countryCode = $auth->country_code;
         $mobile = "$countryCode$mobile";
@@ -70,6 +90,6 @@ class Packages extends Component
         $id = Auth::user()->id;
         $data = Recharge::where(['user_id' => $id, 'status' => 1])->get();
         $referals = User::where(['parent_id' => $id, 'role' => 1])->get();
-        return view('livewire.packages', compact('packages', 'data','referals'));
+        return view('livewire.packages', compact('packages', 'data', 'referals'));
     }
 }

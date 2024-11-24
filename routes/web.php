@@ -3,6 +3,9 @@
 use App\Jobs\DayJob;
 use App\Models\Packages;
 use App\Models\Recharge;
+use App\Models\User;
+use App\Models\Wallet;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -62,7 +65,45 @@ Route::get('/redirect', function (Request $request) {
         ])->get("https://www.instamojo.com/api/1.1/payments/$paymentId/");
 
         $res = json_decode($response->body(), true);
+        User::find($recharge->user_id)->update([
+            'package_id' => $recharge->package_id,
+            'expiry_date' => Carbon::now()->addYear(1)->format('Y-m-d'),
+        ]);
+        $parentId = User::find($recharge->user_id)->parent_id;
+        $firstParent = User::find($parentId);
+        $firstParentIds = $firstParent->id;
+        if ($firstParent) {
+            $referalAmount = round($recharge->unit_price * 0.5);
+            Wallet::create([
+                'user_id' => $parentId,
+                'current_balance' => $firstParent->wallet_balance + $referalAmount,
+                'previous_balance' => $firstParent->wallet_balance,
+                'type' => 1,
+                'amount' => $referalAmount,
+                'coupon_used_id' => $recharge->recharge_by,
+                'coupon_used_string' =>"",
+                'account_source' => 2,
+                'used_by_name'=> ""
+            ]);
+            $firstParent->update(['wallet_balance' => $firstParent->wallet_balance + $referalAmount]);
+            $firstParentId = User::find($firstParentIds);
+            $secondParent = User::find($firstParentId->parent_id);
+            $referalAmountNew = round($recharge->unit_price * 0.15);
+            Wallet::create([
+                'user_id' => $secondParent->id,
+                'current_balance' => $secondParent->wallet_balance + $referalAmountNew,
+                'previous_balance' => $secondParent->wallet_balance,
+                'type' => 1,
+                'amount' => $referalAmountNew,
+                'coupon_used_id' => $recharge->user_id,
+                'coupon_used_string' => "",
+                'account_source' => 2,
+                'used_by_name'=> ""
+            ]);
+            $secondParent->increment('wallet_balance', $referalAmountNew);
+        }
         $recharge = $recharge->update(['status' => 1, 'raw_json' => json_encode($recharge), 'fees' => $res['payment']['fees'], 'billing_instrument' => $response['payment']['billing_instrument']]);
+
         return redirect()->route('packages');
     } else {
         return redirect()->route('login');
