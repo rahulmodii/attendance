@@ -3,9 +3,6 @@
 use App\Jobs\DayJob;
 use App\Models\Packages;
 use App\Models\Recharge;
-use App\Models\User;
-use App\Models\Wallet;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -16,20 +13,19 @@ Route::get('/', function () {
     return view('login');
 })->name('login');
 
-Route::get('/packages-create',function(){
+Route::get('/packages-create', function () {
     // id, package_name, amount, max_staff, status, created_at, updated_at
     $packages = [
-        ['package_name' => 'Bronze', 'amount' => 2000, 'min_staff' => 1, 'max_staff' => 10, 'status' => 1],
-        ['package_name' => 'Silver', 'amount' => 3000, 'min_staff' => 10, 'max_staff' => 20, 'status' => 1],
-        ['package_name' => 'Gold', 'amount' => 4000, 'min_staff' => 20, 'max_staff' => 30, 'status' => 1],
-        ['package_name' => 'Platinum', 'amount' => 5000, 'min_staff' => 30, 'max_staff' => 40, 'status' => 1],
+        ['package_name' => 'Bronze', 'amount' => 2000, 'min_staff' => 1, 'max_staff' => 10, 'status' => 1, 'other_amount' => 1000],
+        ['package_name' => 'Silver', 'amount' => 3000, 'min_staff' => 10, 'max_staff' => 20, 'status' => 1, 'other_amount' => 1500],
+        ['package_name' => 'Gold', 'amount' => 4000, 'min_staff' => 20, 'max_staff' => 30, 'status' => 1, 'other_amount' => 2000],
+        ['package_name' => 'Platinum', 'amount' => 5000, 'min_staff' => 30, 'max_staff' => 40, 'status' => 1, 'other_amount' => 2500],
     ];
-
+    // Packages::all()->delete();
     Packages::insert($packages);
 });
 
-Route::get('/testpayment',function(){
-
+Route::get('/testpayment', function () {
 
     $response = Http::withHeaders([
         'X-Api-Key' => '1738a39ef7efea853cd22d9ec697044e',
@@ -39,7 +35,7 @@ Route::get('/testpayment',function(){
         'amount' => '10',
         'phone' => '919024829041',
         'buyer_name' => 'rahul',
-        'redirect_url' =>'https://8871-205-254-163-52.ngrok-free.app/redirect',
+        'redirect_url' => 'https://8871-205-254-163-52.ngrok-free.app/redirect',
         'webhook' => 'https://8871-205-254-163-52.ngrok-free.app/webhook',
         'send_email' => false,
         'send_sms' => false,
@@ -52,23 +48,31 @@ Route::get('/testpayment',function(){
     return redirect()->away($url);
 });
 
-Route::get('/redirect',function(Request $request){
-
+Route::get('/redirect', function (Request $request) {
     $paymentId = $request->get('payment_id');
+    $paymentRequestId = $request->get('payment_request_id');
+    if (!$paymentId && !$paymentRequestId) {
+        return redirect()->route('login');
+    }
+    $recharge = Recharge::where('payment_id', $paymentRequestId)->first();
+    if ($recharge) {
         $response = Http::withHeaders([
             'X-Api-Key' => '1738a39ef7efea853cd22d9ec697044e',
             'X-Auth-Token' => '2dc1fb5a6c41ac17949ae1d9611784a1',
         ])->get("https://www.instamojo.com/api/1.1/payments/$paymentId/");
 
-        $res = json_decode($response->body(),true);
-        dd($res);
+        $res = json_decode($response->body(), true);
+        $recharge = $recharge->update(['status' => 1, 'raw_json' => json_encode($recharge), 'fees' => $res['payment']['fees'], 'billing_instrument' => $response['payment']['billing_instrument']]);
+        return redirect()->route('packages');
+    } else {
+        return redirect()->route('login');
+    }
 
 });
 
-Route::post('/webhook',function(Request $request){
+Route::post('/webhook', function (Request $request) {
     dd($request->body());
 });
-
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/attendance', function () {
@@ -99,8 +103,6 @@ Route::middleware(['auth'])->group(function () {
         return view('wallet');
     })->name('wallet');
 
-
-
     Route::get('/logout', function () {
         if (Auth::check()) {
             Auth::logout();
@@ -112,6 +114,6 @@ Route::middleware(['auth'])->group(function () {
     })->name('logout');
 });
 
-Route::get('/test',function(){
+Route::get('/test', function () {
     DayJob::dispatch();
 });

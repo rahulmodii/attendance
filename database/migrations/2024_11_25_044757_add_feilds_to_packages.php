@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('recharges', function (Blueprint $table) {
-            $table->bigInteger('recharge_by')->default(0);
-            $table->tinyInteger('status')->default(0);
+        Schema::table('packages', function (Blueprint $table) {
+            $table->integer('other_amount')->default(0);
         });
     }
 
@@ -22,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('recharges', function (Blueprint $table) {
-            $table->dropColumn('recharge_by');
+        Schema::table('packages', function (Blueprint $table) {
+            $table->dropColumn('other_amount');
         });
     }
 };

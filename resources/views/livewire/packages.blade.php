@@ -55,7 +55,7 @@
         <!--begin::Content container-->
         <div id="kt_app_content_container" class="app-container container-fluid">
             <!--begin::Pricing card-->
-            <div class="card" id="kt_pricing">
+            <div class="card mb-10" id="kt_pricing">
                 <!--begin::Card body-->
                 <div class="card-body p-lg-17">
                     <!--begin::Plans-->
@@ -64,6 +64,15 @@
                         <div class="mb-13 text-center">
                             <h1 class="fs-2hx fw-bold mb-5">Choose Your Plan</h1>
                             <div class="text-gray-600 fw-semibold fs-5"></div>
+                            <select class="form-select form-select-solid" data-control="select2"
+                                data-placeholder="Seller Annual Fee" data-hide-search="true"
+                                data-select2-id="select2-data-7-0fji" tabindex="-1" aria-hidden="true"
+                                data-kt-initialized="1" wire:model='otherPersonRechargeId'>
+                                <option value="">--Self--</option>
+                                @foreach ($referals as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <!--end::Heading-->
                         <!--begin::Nav group-->
@@ -86,10 +95,13 @@
                                             <!--begin::Heading-->
                                             <div class="mb-7 text-center">
                                                 <!--begin::Title-->
-                                                <h1 class="text-gray-900 mb-5 fw-bolder">{{ $value->package_name ?? ''}}</h1>
+                                                <h1 class="text-gray-900 mb-5 fw-bolder">
+                                                    {{ $value->package_name ?? '' }}</h1>
                                                 <!--end::Title-->
                                                 <!--begin::Description-->
-                                                <div class="text-gray-600 fw-semibold mb-5">Optimal for {{ $value->min_staff ?? '' }} - {{ $value->max_staff ?? '' }} team size
+                                                <div class="text-gray-600 fw-semibold mb-5">Optimal for
+                                                    {{ $value->min_staff ?? '' }} - {{ $value->max_staff ?? '' }} team
+                                                    size
                                                     <br>and new startup
                                                 </div>
                                                 <!--end::Description-->
@@ -118,31 +130,33 @@
                                                 <!--begin::Item-->
                                                 <div class="d-flex align-items-center mb-5">
                                                     <span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Up to
-                                                      In out report</span>
+                                                        In out report</span>
                                                     <i class="ki-outline ki-check-circle fs-1 text-success"></i>
                                                 </div>
                                                 <!--end::Item-->
                                                 <!--begin::Item-->
                                                 <div class="d-flex align-items-center mb-5">
-                                                    <span
-                                                        class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Daily whatsapp report</span>
+                                                    <span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Daily
+                                                        whatsapp report</span>
                                                     <i class="ki-outline ki-check-circle fs-1 text-success"></i>
                                                 </div>
                                                 <div class="d-flex align-items-center mb-5">
                                                     <span
-                                                        class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Location Based Authentication</span>
+                                                        class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Location
+                                                        Based Authentication</span>
                                                     <i class="ki-outline ki-check-circle fs-1 text-success"></i>
                                                 </div>
                                                 <div class="d-flex align-items-center mb-5">
-                                                    <span
-                                                        class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Selfie Verfication</span>
+                                                    <span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Selfie
+                                                        Verfication</span>
                                                     <i class="ki-outline ki-check-circle fs-1 text-success"></i>
                                                 </div>
 
                                             </div>
                                             <!--end::Features-->
                                             <!--begin::Select-->
-                                            <a wire:click="recharge('{{encrypt($value->id)}}')" class="btn btn-sm btn-primary">Select</a>
+                                            <a wire:click="recharge('{{ encrypt($value->id) }}')"
+                                                class="btn btn-sm btn-primary">Select</a>
                                             <!--end::Select-->
                                         </div>
                                         <!--end::Option-->
@@ -157,6 +171,78 @@
                     <!--end::Plans-->
                 </div>
                 <!--end::Card body-->
+            </div>
+            <div class="card">
+                <!--begin::Header-->
+                <div class="card-header card-header-stretch">
+                    <!--begin::Title-->
+                    <div class="card-title">
+                        <h3 class="m-0 text-gray-800">Recharge History</h3>
+                    </div>
+                    <!--end::Title-->
+                    <!--begin::Toolbar-->
+                    <div class="card-toolbar m-0">
+                        <!--begin::Tab nav-->
+                        <ul class="nav nav-stretch fs-5 fw-semibold nav-line-tabs border-transparent" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a id="kt_referrals_year_tab" class="nav-link text-active-gray-800 active"
+                                    data-bs-toggle="tab" role="tab" href="#kt_referrals_1" aria-selected="true">This
+                                    Year</a>
+                            </li>
+                        </ul>
+                        <!--end::Tab nav-->
+                    </div>
+                    <!--end::Toolbar-->
+                </div>
+                <!--end::Header-->
+                <!--begin::Tab Content-->
+                <div id="kt_referred_users_tab_content" class="tab-content">
+                    <!--begin::Tab panel-->
+                    <div id="kt_referrals_1" class="card-body p-5 tab-pane fade show active" role="tabpanel"
+                        aria-labelledby="kt_referrals_year_tab">
+                        <div class="table-responsive">
+                            <!--begin::Table-->
+                            <table class="table align-middle table-row-bordered table-row-solid gy-4 gs-9">
+                                <!--begin::Thead-->
+                                <thead class="border-gray-200 fs-5 fw-semibold bg-lighten">
+                                    <tr>
+                                        <th class="min-w-125px">Package Name</th>
+                                        <th class="min-w-125px">Amount</th>
+                                        <th class="min-w-125px">Recharge for</th>
+                                        <th class="min-w-125px">Recharge by</th>
+                                        <th class="min-w-125px">Date</th>
+                                        <th class="min-w-125px">Tranasaction Id</th>
+                                    </tr>
+                                </thead>
+                                <!--end::Thead-->
+                                <!--begin::Tbody-->
+                                <tbody class="fs-6 fw-semibold text-gray-600">
+                                    @foreach ($data as $item)
+                                        <tr>
+                                            <td>{{ $item->package->package_name ?? '' }}</td>
+                                            <td>{{ $item->unit_price ?? '' }}</td>
+                                            <td>{{ $item->buyer_name ?? '' }}</td>
+                                            <td>{{ $item->rechargeBy->name ?? '' }}</td>
+                                            <td>
+                                                {{ $item->created_at->format('d-m-Y') ?? '' }}
+                                            </td>
+                                            <td>{{ $item->payment_id }}</td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                                <!--end::Tbody-->
+                            </table>
+                            <!--end::Table-->
+                        </div>
+                    </div>
+                    <!--end::Tab panel-->
+                    <!--begin::Tab panel-->
+
+
+                    <!--end::Tab panel-->
+                </div>
+                <!--end::Tab Content-->
             </div>
             <!--end::Pricing card-->
         </div>

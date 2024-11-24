@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Models\Verification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -25,6 +24,11 @@ class Login extends Component
 
     public function mount()
     {
+
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+
         $this->countryList = [
             "91" => "India",
             "93" => "Afghanistan",
