@@ -75,7 +75,7 @@ Route::get('/redirect', function (Request $request) {
             Log::info("user not updated $paymentId");
             return redirect()->route('packages');
         }
-        $parentId = User::find($recharge->user_id)->parent_id;
+        $parentId = User::find($recharge->user_id)->referal_id;
 
         if ($parentId) {
             $firstParent = User::find($parentId);
@@ -99,7 +99,7 @@ Route::get('/redirect', function (Request $request) {
                 $firstParent->increment('wallet_balance', $referalAmount);
 
                 // Check and handle second parent
-                $secondParentId = $firstParent->parent_id;
+                $secondParentId = $firstParent->referal_id;
                 if ($secondParentId) {
                     $secondParent = User::find($secondParentId);
                     if ($secondParent) {
