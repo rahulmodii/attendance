@@ -71,7 +71,7 @@ class Packages extends Component
                 'allow_repeated_payments' => false,
             ]);
             $externalCall = json_decode($response->body(), true);
-            // dd($externalCall);
+            dd($externalCall);
             if (isset($externalCall['success']) && $externalCall['success'] == true) {
                 $rechargeCheck = Recharge::find($createRecharge->id);
                 $rechargeCheck->update(['payment_id' => $externalCall['payment_request']['id']]);
