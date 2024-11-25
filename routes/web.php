@@ -122,7 +122,7 @@ Route::get('/redirect', function (Request $request) {
 
         $recharge = $recharge->update(['status' => 1, 'raw_json' => json_encode($recharge), 'fees' => $res['payment']['fees'], 'billing_instrument' => $response['payment']['billing_instrument']]);
 
-        // return redirect()->route('packages');
+        return redirect()->route('packages');
     } else {
         return redirect()->route('login');
     }
