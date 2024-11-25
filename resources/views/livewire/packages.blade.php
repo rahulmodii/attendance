@@ -221,7 +221,7 @@
                                         <tr>
                                             <td>{{ $item->package->package_name ?? '' }}</td>
                                             <td>{{ $item->unit_price ?? '' }}</td>
-                                            <td>{{ $item->buyer_name ?? '' }}</td>
+                                            <td>{{ $item->rechargeFor->name ?? '' }}</td>
                                             <td>{{ $item->rechargeBy->name ?? '' }}</td>
                                             <td>
                                                 {{ $item->created_at->format('d-m-Y') ?? '' }}

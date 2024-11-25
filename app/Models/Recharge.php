@@ -19,4 +19,8 @@ class Recharge extends Model
     public function rechargeBy(){
         return $this->belongsTo(User::class,'recharge_by');
     }
+
+    public function rechargeFor(){
+        return $this->belongsTo(User::class,'user_id');
+    }
 }
