@@ -77,7 +77,7 @@ class Packages extends Component
                 $rechargeCheck->update(['payment_id' => $externalCall['payment_request']['id']]);
                 return redirect()->away($externalCall['payment_request']['longurl']);
             } else {
-
+                return $this->dispatch('message', 'Something went wrong!!');
             }
         }
 
