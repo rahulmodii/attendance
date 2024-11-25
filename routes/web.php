@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -59,7 +60,6 @@ Route::get('/redirect', function (Request $request) {
         return redirect()->route('login');
     }
     $recharge = Recharge::where('payment_id', $paymentRequestId)->first();
-    dd($recharge);
     if ($recharge) {
         $response = Http::withHeaders([
             'X-Api-Key' => '1738a39ef7efea853cd22d9ec697044e',
@@ -67,10 +67,14 @@ Route::get('/redirect', function (Request $request) {
         ])->get("https://www.instamojo.com/api/1.1/payments/$paymentId/");
 
         $res = json_decode($response->body(), true);
-        User::find($recharge->user_id)->update([
+        $userUpdate =   User::find($recharge->user_id)->update([
             'package_id' => $recharge->package_id,
             'expiry_date' => Carbon::now()->addYear(1)->format('Y-m-d'),
         ]);
+        if (!$userUpdate) {
+            Log::info("user not updated $paymentId");
+            return redirect()->route('packages');
+        }
         $parentId = User::find($recharge->user_id)->parent_id;
 
         if ($parentId) {
@@ -118,12 +122,17 @@ Route::get('/redirect', function (Request $request) {
                     }
                 }
             }
+        }else{
+            Log::info("no parent id $paymentId");
         }
 
         $recharge = $recharge->update(['status' => 1, 'raw_json' => json_encode($recharge), 'fees' => $res['payment']['fees'], 'billing_instrument' => $response['payment']['billing_instrument']]);
-
+        if (!$recharge) {
+            Log::info("recharge table not updated $paymentId");
+        }
         return redirect()->route('packages');
     } else {
+        Log::info("payment id not found $paymentId");
         return redirect()->route('login');
     }
 
