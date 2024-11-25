@@ -52,12 +52,14 @@ Route::get('/testpayment', function () {
 });
 
 Route::get('/redirect', function (Request $request) {
+
     $paymentId = $request->get('payment_id');
     $paymentRequestId = $request->get('payment_request_id');
     if (!$paymentId && !$paymentRequestId) {
         return redirect()->route('login');
     }
     $recharge = Recharge::where('payment_id', $paymentRequestId)->first();
+    // dd($recharge);
     if ($recharge) {
         $response = Http::withHeaders([
             'X-Api-Key' => '1738a39ef7efea853cd22d9ec697044e',
@@ -70,41 +72,57 @@ Route::get('/redirect', function (Request $request) {
             'expiry_date' => Carbon::now()->addYear(1)->format('Y-m-d'),
         ]);
         $parentId = User::find($recharge->user_id)->parent_id;
-        $firstParent = User::find($parentId);
-        $firstParentIds = $firstParent->id;
-        if ($firstParent) {
-            $referalAmount = round($recharge->unit_price * 0.5);
-            Wallet::create([
-                'user_id' => $parentId,
-                'current_balance' => $firstParent->wallet_balance + $referalAmount,
-                'previous_balance' => $firstParent->wallet_balance,
-                'type' => 1,
-                'amount' => $referalAmount,
-                'coupon_used_id' => $recharge->recharge_by,
-                'coupon_used_string' =>"",
-                'account_source' => 2,
-                'used_by_name'=> ""
-            ]);
-            $firstParent->update(['wallet_balance' => $firstParent->wallet_balance + $referalAmount]);
-            $firstParentId = User::find($firstParentIds);
-            $secondParent = User::find($firstParentId->parent_id);
-            $referalAmountNew = round($recharge->unit_price * 0.15);
-            Wallet::create([
-                'user_id' => $secondParent->id,
-                'current_balance' => $secondParent->wallet_balance + $referalAmountNew,
-                'previous_balance' => $secondParent->wallet_balance,
-                'type' => 1,
-                'amount' => $referalAmountNew,
-                'coupon_used_id' => $recharge->user_id,
-                'coupon_used_string' => "",
-                'account_source' => 2,
-                'used_by_name'=> ""
-            ]);
-            $secondParent->increment('wallet_balance', $referalAmountNew);
+
+        if ($parentId) {
+            $firstParent = User::find($parentId);
+
+            if ($firstParent) {
+                $referalAmount = round($recharge->unit_price * 0.5);
+
+                // Update the first parent's wallet and create a wallet entry
+                Wallet::create([
+                    'user_id' => $firstParent->id,
+                    'current_balance' => $firstParent->wallet_balance + $referalAmount,
+                    'previous_balance' => $firstParent->wallet_balance,
+                    'type' => 1,
+                    'amount' => $referalAmount,
+                    'coupon_used_id' => $recharge->recharge_by,
+                    'coupon_used_string' => "",
+                    'account_source' => 2,
+                    'used_by_name' => "",
+                    'recharge_id' => $recharge->id,
+                ]);
+                $firstParent->increment('wallet_balance', $referalAmount);
+
+                // Check and handle second parent
+                $secondParentId = $firstParent->parent_id;
+                if ($secondParentId) {
+                    $secondParent = User::find($secondParentId);
+                    if ($secondParent) {
+                        $referalAmountNew = round($recharge->unit_price * 0.15);
+
+                        // Update the second parent's wallet and create a wallet entry
+                        Wallet::create([
+                            'user_id' => $secondParent->id,
+                            'current_balance' => $secondParent->wallet_balance + $referalAmountNew,
+                            'previous_balance' => $secondParent->wallet_balance,
+                            'type' => 1,
+                            'amount' => $referalAmountNew,
+                            'coupon_used_id' => $recharge->user_id,
+                            'coupon_used_string' => "",
+                            'account_source' => 2,
+                            'used_by_name' => "",
+                            'recharge_id' => $recharge->id,
+                        ]);
+                        $secondParent->increment('wallet_balance', $referalAmountNew);
+                    }
+                }
+            }
         }
+
         $recharge = $recharge->update(['status' => 1, 'raw_json' => json_encode($recharge), 'fees' => $res['payment']['fees'], 'billing_instrument' => $response['payment']['billing_instrument']]);
 
-        return redirect()->route('packages');
+        // return redirect()->route('packages');
     } else {
         return redirect()->route('login');
     }

@@ -72,7 +72,7 @@ class Packages extends Component
             $externalCall = json_decode($response->body(), true);
             if (isset($externalCall['success']) && $externalCall['success'] == true) {
                 $rechargeCheck = Recharge::find($createRecharge->id);
-                User::find($rechargeCheck->user_id)->update(['payment_id' => $externalCall['payment_request']['id']]);
+                $rechargeCheck->update(['payment_id' => $externalCall['payment_request']['id']]);
                 return redirect()->away($externalCall['payment_request']['longurl']);
             } else {
 
