@@ -184,6 +184,14 @@
                                                     <span class="menu-title">Referral</span>
                                                 </a>
                                             </div>
+                                            <div class="menu-item">
+                                                <a class="menu-link active" href="{{ route('wallet') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Wallet</span>
+                                                </a>
+                                            </div>
                                         @endif
 
 
