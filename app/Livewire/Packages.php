@@ -44,7 +44,7 @@ class Packages extends Component
         $mobile = "$countryCode$mobile";
         $package = ModelsPackages::find($packageId);
         Recharge::where(['user_id' => $authId, 'status' => 0])->delete();
-        $amount = $this->rechargeForOther ? $package->other_amount  : $package->amount;
+        $amount = $this->rechargeForOther ? $package->other_amount : $package->amount;
         $createRecharge = Recharge::create([
             'user_id' => $authId,
             'package_id' => $packageId,
@@ -90,7 +90,12 @@ class Packages extends Component
     {
         $packages = ModelsPackages::all();
         $id = Auth::user()->id;
-        $data = Recharge::where(['user_id' => $id, 'status' => 1])->get();
+        $data = Recharge::where('status', 1)
+            ->where(function ($query) use ($id) {
+                $query->where('user_id', $id)
+                    ->orWhere('recharge_by', $id);
+            })
+            ->get();
         $referals = User::where(['referal_id' => $id])->get();
         return view('livewire.packages', compact('packages', 'data', 'referals'));
     }
