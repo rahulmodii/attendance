@@ -82,7 +82,7 @@ Route::get('/redirect', function (Request $request) {
 
             if ($firstParent) {
                 if ($recharge->user_id == $recharge->recharge_by) {
-                    $referalAmount = round($recharge->unit_price * 0.5);
+                    $referalAmount = round($recharge->package->amount * 0.5);
                     Wallet::create([
                         'user_id' => $firstParent->id,
                         'current_balance' => $firstParent->wallet_balance + $referalAmount,
