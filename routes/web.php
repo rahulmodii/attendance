@@ -81,22 +81,24 @@ Route::get('/redirect', function (Request $request) {
             $firstParent = User::find($parentId);
 
             if ($firstParent) {
-                $referalAmount = round($recharge->unit_price * 0.5);
-
+                if ($recharge->user_id == $recharge->recharge_by) {
+                    $referalAmount = round($recharge->unit_price * 0.5);
+                    Wallet::create([
+                        'user_id' => $firstParent->id,
+                        'current_balance' => $firstParent->wallet_balance + $referalAmount,
+                        'previous_balance' => $firstParent->wallet_balance,
+                        'type' => 1,
+                        'amount' => $referalAmount,
+                        'coupon_used_id' => $recharge->recharge_by,
+                        'coupon_used_string' => "",
+                        'account_source' => 2,
+                        'used_by_name' => "",
+                        'recharge_id' => $recharge->id,
+                    ]);
+                    $firstParent->increment('wallet_balance', $referalAmount);
+                }
                 // Update the first parent's wallet and create a wallet entry
-                Wallet::create([
-                    'user_id' => $firstParent->id,
-                    'current_balance' => $firstParent->wallet_balance + $referalAmount,
-                    'previous_balance' => $firstParent->wallet_balance,
-                    'type' => 1,
-                    'amount' => $referalAmount,
-                    'coupon_used_id' => $recharge->recharge_by,
-                    'coupon_used_string' => "",
-                    'account_source' => 2,
-                    'used_by_name' => "",
-                    'recharge_id' => $recharge->id,
-                ]);
-                $firstParent->increment('wallet_balance', $referalAmount);
+
 
                 // Check and handle second parent
                 $secondParentId = $firstParent->referal_id;
