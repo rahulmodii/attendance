@@ -105,7 +105,7 @@ Route::get('/redirect', function (Request $request) {
                 if ($secondParentId) {
                     $secondParent = User::find($secondParentId);
                     if ($secondParent) {
-                        $referalAmountNew = round($recharge->unit_price * 0.15);
+                        $referalAmountNew = round($recharge->package->amount * 0.15);
 
                         // Update the second parent's wallet and create a wallet entry
                         Wallet::create([
