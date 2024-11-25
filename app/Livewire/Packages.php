@@ -35,6 +35,7 @@ class Packages extends Component
 
     public function recharge($id)
     {
+        // dd($id);
         $packageId = decrypt($id);
         $auth = Auth::user();
         $authId = $this->rechargeForOther ? $this->rechargeuserId : $auth->id;
@@ -43,13 +44,13 @@ class Packages extends Component
         $mobile = "$countryCode$mobile";
         $package = ModelsPackages::find($packageId);
         Recharge::where(['user_id' => $authId, 'status' => 0])->delete();
-
+        $amount = $this->rechargeForOther ? $package->other_amount  : $package->amount;
         $createRecharge = Recharge::create([
             'user_id' => $authId,
             'package_id' => $packageId,
             'buyer_name' => $auth->name,
             'buyer_phone' => $mobile,
-            'unit_price' => $package->amount,
+            'unit_price' => $amount,
             'recharge_by' => $auth->id,
         ]);
 
@@ -59,7 +60,7 @@ class Packages extends Component
                 'X-Auth-Token' => '2dc1fb5a6c41ac17949ae1d9611784a1',
             ])->post('https://www.instamojo.com/api/1.1/payment-requests/', [
                 'purpose' => "sales",
-                'amount' => "$package->amount",
+                'amount' => "$createRecharge->unit_price",
                 'phone' => "$mobile",
                 'buyer_name' => "$auth->name",
                 'redirect_url' => 'https://214b-205-254-163-52.ngrok-free.app/redirect',
@@ -70,6 +71,7 @@ class Packages extends Component
                 'allow_repeated_payments' => false,
             ]);
             $externalCall = json_decode($response->body(), true);
+            // dd($externalCall);
             if (isset($externalCall['success']) && $externalCall['success'] == true) {
                 $rechargeCheck = Recharge::find($createRecharge->id);
                 $rechargeCheck->update(['payment_id' => $externalCall['payment_request']['id']]);

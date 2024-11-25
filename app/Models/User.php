@@ -29,7 +29,8 @@ class User extends Authenticatable
         'referal_id',
         'wallet_balance',
         'is_blocked',
-        'expiry_date'
+        'expiry_date',
+        'package_id'
     ];
 
     /**
