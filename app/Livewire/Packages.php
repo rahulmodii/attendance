@@ -91,7 +91,7 @@ class Packages extends Component
         $packages = ModelsPackages::all();
         $id = Auth::user()->id;
         $data = Recharge::where(['user_id' => $id, 'status' => 1])->get();
-        $referals = User::where(['parent_id' => $id, 'role' => 1])->get();
+        $referals = User::where(['referal_id' => $id])->get();
         return view('livewire.packages', compact('packages', 'data', 'referals'));
     }
 }
