@@ -59,7 +59,7 @@ Route::get('/redirect', function (Request $request) {
         return redirect()->route('login');
     }
     $recharge = Recharge::where('payment_id', $paymentRequestId)->first();
-    // dd($recharge);
+    dd($recharge);
     if ($recharge) {
         $response = Http::withHeaders([
             'X-Api-Key' => '1738a39ef7efea853cd22d9ec697044e',
