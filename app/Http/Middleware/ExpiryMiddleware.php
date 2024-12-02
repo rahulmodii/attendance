@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,13 @@ class ExpiryMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (now()->diffInDays(auth()->user()->expiry_date) > 0 ) {
-           return redirect()->route('packages');
+        $date = auth()->user()->expiry_date;
+
+        if (Carbon::parse($date)->isPast()) {
+            return redirect()->route('packages');
         }
 
         return $next($request);
     }
 }
+

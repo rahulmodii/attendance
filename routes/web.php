@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\ExpiryMiddleware;
 use App\Jobs\DayJob;
 use App\Models\Packages;
 use App\Models\Recharge;
@@ -17,40 +18,40 @@ Route::get('/', function () {
     return view('login');
 })->name('login');
 
-Route::get('/packages-create', function () {
-    // id, package_name, amount, max_staff, status, created_at, updated_at
-    $packages = [
-        ['package_name' => 'Bronze', 'amount' => 2000, 'min_staff' => 1, 'max_staff' => 10, 'status' => 1, 'other_amount' => 1000],
-        ['package_name' => 'Silver', 'amount' => 3000, 'min_staff' => 10, 'max_staff' => 20, 'status' => 1, 'other_amount' => 1500],
-        ['package_name' => 'Gold', 'amount' => 4000, 'min_staff' => 20, 'max_staff' => 30, 'status' => 1, 'other_amount' => 2000],
-        ['package_name' => 'Platinum', 'amount' => 5000, 'min_staff' => 30, 'max_staff' => 40, 'status' => 1, 'other_amount' => 2500],
-    ];
-    // Packages::all()->delete();
-    Packages::insert($packages);
-});
+// Route::get('/packages-create', function () {
+//     // id, package_name, amount, max_staff, status, created_at, updated_at
+//     $packages = [
+//         ['package_name' => 'Bronze', 'amount' => 2000, 'min_staff' => 1, 'max_staff' => 10, 'status' => 1, 'other_amount' => 1000],
+//         ['package_name' => 'Silver', 'amount' => 3000, 'min_staff' => 10, 'max_staff' => 20, 'status' => 1, 'other_amount' => 1500],
+//         ['package_name' => 'Gold', 'amount' => 4000, 'min_staff' => 20, 'max_staff' => 30, 'status' => 1, 'other_amount' => 2000],
+//         ['package_name' => 'Platinum', 'amount' => 5000, 'min_staff' => 30, 'max_staff' => 40, 'status' => 1, 'other_amount' => 2500],
+//     ];
+//     // Packages::all()->delete();
+//     Packages::insert($packages);
+// });
 
-Route::get('/testpayment', function () {
+// Route::get('/testpayment', function () {
 
-    $response = Http::withHeaders([
-        'X-Api-Key' => '1738a39ef7efea853cd22d9ec697044e',
-        'X-Auth-Token' => '2dc1fb5a6c41ac17949ae1d9611784a1',
-    ])->post('https://www.instamojo.com/api/1.1/payment-requests/', [
-        'purpose' => "sales",
-        'amount' => '10',
-        'phone' => '919024829041',
-        'buyer_name' => 'rahul',
-        'redirect_url' => 'https://8871-205-254-163-52.ngrok-free.app/redirect',
-        'webhook' => 'https://8871-205-254-163-52.ngrok-free.app/webhook',
-        'send_email' => false,
-        'send_sms' => false,
-        'email' => 'foo@example.com',
-        'allow_repeated_payments' => false,
-    ]);
+//     $response = Http::withHeaders([
+//         'X-Api-Key' => '1738a39ef7efea853cd22d9ec697044e',
+//         'X-Auth-Token' => '2dc1fb5a6c41ac17949ae1d9611784a1',
+//     ])->post('https://www.instamojo.com/api/1.1/payment-requests/', [
+//         'purpose' => "sales",
+//         'amount' => '10',
+//         'phone' => '919024829041',
+//         'buyer_name' => 'rahul',
+//         'redirect_url' => 'https://8871-205-254-163-52.ngrok-free.app/redirect',
+//         'webhook' => 'https://8871-205-254-163-52.ngrok-free.app/webhook',
+//         'send_email' => false,
+//         'send_sms' => false,
+//         'email' => 'foo@example.com',
+//         'allow_repeated_payments' => false,
+//     ]);
 
-    $url = json_decode($response->body())->payment_request->longurl;
-    // dd($url);
-    return redirect()->away($url);
-});
+//     $url = json_decode($response->body())->payment_request->longurl;
+//     // dd($url);
+//     return redirect()->away($url);
+// });
 
 Route::get('/redirect', function (Request $request) {
 
@@ -140,11 +141,11 @@ Route::get('/redirect', function (Request $request) {
 
 });
 
-Route::post('/webhook', function (Request $request) {
-    dd($request->body());
-});
+// Route::post('/webhook', function (Request $request) {
+//     dd($request->body());
+// });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth',ExpiryMiddleware::class])->group(function () {
     Route::get('/attendance', function () {
         return view('attendance');
     })->name('attendance');
@@ -163,7 +164,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/packages', function () {
         return view('packages');
-    })->name('packages');
+    })->name('packages')->withoutMiddleware(ExpiryMiddleware::class);
 
     Route::get('/referral', function () {
         return view('referal');
