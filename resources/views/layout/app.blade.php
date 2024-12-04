@@ -64,6 +64,7 @@
                     </div>
                     <div class="app-navbar flex-lg-grow-1" id="kt_app_header_navbar">
                         <div class="app-navbar-item d-flex align-items-stretch flex-lg-grow-1 me-1 me-lg-0">
+                            @if (auth()->user()->role == 1)
                             @if (now()->diffInDays(auth()->user()->expiry_date, false) < 3)
                                 <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6"
                                     style="width: 100%">
@@ -87,6 +88,8 @@
                                     <!--end::Wrapper-->
                                 </div>
                             @endif
+                            @endif
+
 
                         </div>
                         <div class="app-navbar-item ms-1 ms-md-3">
