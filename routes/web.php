@@ -139,7 +139,7 @@ Route::get('/redirect', function (Request $request) {
         return redirect()->route('login');
     }
 
-});
+})->withoutMiddleware(ExpiryMiddleware::class);
 
 // Route::post('/webhook', function (Request $request) {
 //     dd($request->body());
