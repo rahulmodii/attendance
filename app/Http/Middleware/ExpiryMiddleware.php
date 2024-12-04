@@ -16,11 +16,11 @@ class ExpiryMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $date = auth()->user()->expiry_date;
+        // $date = auth()->user()->expiry_date;
 
-        if (Carbon::parse($date)->isPast()) {
-            return redirect()->route('packages');
-        }
+        // if (Carbon::parse($date)->isPast()) {
+        //     return redirect()->route('packages');
+        // }
 
         return $next($request);
     }
