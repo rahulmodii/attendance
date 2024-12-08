@@ -18,11 +18,11 @@
                         <form action="" type="get">
                             <div class="row">
                                 <div class="col-4">
-                                    <input type="date" name="start_date" class="form-control form-select-solid" />
+                                    <input type="date" name="start_date" class="form-control form-select-solid" value="{{ request()->query('start_date') }}" />
 
                                 </div>
                                 <div class="col-4">
-                                    <input type="date" name="end_date" class="form-control form-select-solid" />
+                                    <input type="date" name="end_date" class="form-control form-select-solid" value="{{ request()->query('end_date') }}" />
 
                                 </div>
                                 <div class="col-4">
