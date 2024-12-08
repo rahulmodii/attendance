@@ -50,8 +50,11 @@ class DayJob implements ShouldQueue
                 if ($value->is_white_label == 1) {
                     $url = $value->webhook;
                 }else{
-                    $user = User::find($value->parent_id);
+                    $user = User::find($value->referal_id);
                     $url = $user->webhook;
+                }
+                if (!$url) {
+                    $url = "https://webhooks.wappblaster.com/webhook/66e5ce43e500551042b3f626";
                 }
                 $response = Http::get($url, [
                     'number' => "$mobile",
