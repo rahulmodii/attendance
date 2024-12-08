@@ -31,11 +31,11 @@ class Report extends Component
 
              // Loop through each user to fetch their attendance for the current date
              foreach ($userColumns as $user) {
-                 $attendance = User::find($user['id'])
-                     ->attendanceSessions()
-                     ->whereDate('date', $date)
-                     ->selectRaw('MIN(in_time) as first_in_time, MAX(out_time) as last_out_time')
-                     ->first();
+                $attendance = User::where('id', $user->id)->with(['attendanceSessions' => function ($query){
+                    $query->whereDate('date', Carbon::now()->format('Y-m-d'))
+                        ->selectRaw('user_id, MIN(in_time) as first_in_time, MAX(out_time) as last_out_time')
+                        ->groupBy('user_id');
+                }])->get();
 
                  $totalMinutes = 0;
                  if ($attendance && $attendance->first_in_time && $attendance->last_out_time) {
