@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Report extends Component
@@ -11,7 +12,7 @@ class Report extends Component
     public function render()
     {
          // Get all employees under the authenticated user
-         $users = User::where('parent_id', auth()->user()->id)->get();
+         $users = User::where('parent_id', Auth::user()->id)->get();
 
          // Extract user IDs and names for dynamic columns
          $userColumns = $users->map(function ($user) {
@@ -31,11 +32,11 @@ class Report extends Component
 
              // Loop through each user to fetch their attendance for the current date
              foreach ($userColumns as $user) {
-                $attendance = User::where('id', $user['id'])->with(['attendanceSessions' => function ($query){
-                    $query->whereDate('date', Carbon::now()->format('Y-m-d'))
-                        ->selectRaw('user_id, MIN(in_time) as first_in_time, MAX(out_time) as last_out_time')
-                        ->groupBy('user_id');
-                }])->get();
+                 $attendance = User::find($user['id'])
+                     ->attendanceSessions()
+                     ->whereDate('date', $date)
+                     ->selectRaw('MIN(in_time) as first_in_time, MAX(out_time) as last_out_time')
+                     ->first();
 
                  $totalMinutes = 0;
                  if ($attendance && $attendance->first_in_time && $attendance->last_out_time) {
