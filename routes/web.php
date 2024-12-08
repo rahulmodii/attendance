@@ -178,6 +178,10 @@ Route::middleware(['auth',ExpiryMiddleware::class])->group(function () {
         return view('whitelabel');
     })->name('whitelabel');
 
+    Route::get('/report', function () {
+        return view('report');
+    })->name('report');
+
 
     Route::get('/logout', function () {
         if (Auth::check()) {

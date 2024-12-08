@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -39,6 +40,9 @@ class WhiteLabel extends Component
 
     public function render()
     {
+
+
+        // dd($report);
         return view('livewire.white-label');
     }
 }
