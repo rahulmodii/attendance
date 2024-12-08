@@ -14,7 +14,23 @@
                 <!--begin::Tab nav-->
                 <ul class="nav nav-stretch fs-5 fw-semibold nav-line-tabs border-transparent" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a id="kt_referrals_tab_1" class="nav-link text-active-gray-800 me-4 active" data-bs-toggle="tab" role="tab" href="#kt_referrals_1" aria-selected="true">1st level</a>
+                        {{-- <a id="kt_referrals_tab_1" class="nav-link text-active-gray-800 me-4 active" data-bs-toggle="tab" role="tab" href="#kt_referrals_1" aria-selected="true">1st level</a> --}}
+                        <form action="" type="get">
+                            <div class="row">
+                                <div class="col-4">
+                                    <input type="date" name="start_date" class="form-control form-select-solid" />
+
+                                </div>
+                                <div class="col-4">
+                                    <input type="date" name="end_date" class="form-control form-select-solid" />
+
+                                </div>
+                                <div class="col-4">
+                            <button class="btn btn-primary">filter</button>
+
+                                </div>
+                            </div>
+                        </form>
                     </li>
                     {{-- <li class="nav-item" role="presentation">
                         <a id="kt_referrals_tab_2" class="nav-link text-active-gray-800 me-4" data-bs-toggle="tab" role="tab" href="#kt_referrals_2" aria-selected="false" tabindex="-1">2nd level</a>
