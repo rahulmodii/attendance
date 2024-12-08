@@ -67,7 +67,7 @@ class Report extends Component
                 if ($attendance && $attendance->first_in_time && $attendance->last_out_time) {
                     $inTime = Carbon::parse($attendance->first_in_time);
                     $outTime = Carbon::parse($attendance->last_out_time);
-                    $totalMinutes = $outTime->diffInMinutes($inTime);
+                    $totalMinutes = $outTime->diffInMinutes($inTime,false);
                 }
 
                 $dailyData[$user['id']] = $totalMinutes;
