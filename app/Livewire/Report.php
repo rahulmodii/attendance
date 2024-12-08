@@ -52,6 +52,8 @@ class Report extends Component
             ->get()
             ->groupBy('date');
 
+            // dd($attendanceData);
+
         // Loop through each day of the selected range
         for ($date = $startDate->copy(); $date->lte($endDate); $date->addDay()) {
             $formattedDate = $date->format('Y-m-d');
@@ -67,7 +69,12 @@ class Report extends Component
                 if ($attendance && $attendance->first_in_time && $attendance->last_out_time) {
                     $inTime = Carbon::parse($attendance->first_in_time);
                     $outTime = Carbon::parse($attendance->last_out_time);
-                    $totalMinutes = $outTime->diffInMinutes($inTime,false);
+                    $totalMinutes = abs($outTime->diffInMinutes($inTime,false));
+
+                    $hours = floor($totalMinutes / 60);
+                    $minutes = $totalMinutes % 60;
+
+                    $totalMinutes = sprintf('%02d:%02d', $hours, $minutes);
                 }
 
                 $dailyData[$user['id']] = $totalMinutes;
