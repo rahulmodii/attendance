@@ -31,7 +31,7 @@ class Report extends Component
 
              // Loop through each user to fetch their attendance for the current date
              foreach ($userColumns as $user) {
-                $attendance = User::where('id', $user->id)->with(['attendanceSessions' => function ($query){
+                $attendance = User::where('id', $user['id'])->with(['attendanceSessions' => function ($query){
                     $query->whereDate('date', Carbon::now()->format('Y-m-d'))
                         ->selectRaw('user_id, MIN(in_time) as first_in_time, MAX(out_time) as last_out_time')
                         ->groupBy('user_id');
