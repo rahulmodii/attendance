@@ -195,6 +195,14 @@
                                                     <span class="menu-title">Wallet</span>
                                                 </a>
                                             </div>
+                                            <div class="menu-item">
+                                                <a class="menu-link active" href="{{ route('whitelabel') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">White Label</span>
+                                                </a>
+                                            </div>
                                         @endif
 
 

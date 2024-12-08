@@ -174,6 +174,11 @@ Route::middleware(['auth',ExpiryMiddleware::class])->group(function () {
         return view('wallet');
     })->name('wallet');
 
+    Route::get('/whitelabel', function () {
+        return view('whitelabel');
+    })->name('whitelabel');
+
+
     Route::get('/logout', function () {
         if (Auth::check()) {
             Auth::logout();

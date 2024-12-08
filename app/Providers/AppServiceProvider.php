@@ -21,5 +21,9 @@ class AppServiceProvider extends ServiceProvider
     {
         // dd(url('/'));
 
+        $baseUrl = url('/');
+        $host = parse_url($baseUrl, PHP_URL_HOST);
+        // dd($host);
+
     }
 }

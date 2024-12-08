@@ -30,7 +30,11 @@ class User extends Authenticatable
         'wallet_balance',
         'is_blocked',
         'expiry_date',
-        'package_id'
+        'package_id',
+        'domain',
+        'white_label_webhook',
+        'is_white_label',
+        'webhook'
     ];
 
     /**

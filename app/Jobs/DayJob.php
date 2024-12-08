@@ -46,7 +46,14 @@ class DayJob implements ShouldQueue
                 $countryCode = $value->country_code;
                 $mobile = $value->mobile;
                 $mobile = "$countryCode$mobile";
-                $response = Http::get("https://webhooks.wappblaster.com/webhook/66e5ce43e500551042b3f626", [
+                $url = "https://webhooks.wappblaster.com/webhook/66e5ce43e500551042b3f626";
+                if ($value->is_white_label == 1) {
+                    $url = $value->webhook;
+                }else{
+                    $user = User::find($value->parent_id);
+                    $url = $user->webhook;
+                }
+                $response = Http::get($url, [
                     'number' => "$mobile",
                     'report' => $connectionString,
                 ]);
