@@ -34,7 +34,12 @@ class User extends Authenticatable
         'domain',
         'white_label_webhook',
         'is_white_label',
-        'webhook'
+        'webhook',
+        'logo',
+        'software_name',
+        'software_update_path',
+        'version_number',
+        'support_number'
     ];
 
     /**

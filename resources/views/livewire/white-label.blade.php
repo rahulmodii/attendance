@@ -30,5 +30,58 @@
             </div>
 
         </div>
+
+        <div class="card-body py-10">
+            <h2 class="mb-9">White Label Config</h2>
+            <!--begin::Overview-->
+            <div class="row mb-10">
+                <div class="col-xl-12 mt-10">
+                    <h4 class="text-gray-800 mb-0">Logo</h4>
+                    <p class="fs-6 fw-semibold text-gray-600 py-4 m-0">Plan your blog post by choosing a topic, creating an outline conduct
+                    <br>research, and checking facts</p>
+                    <div class="d-flex">
+                        <input wire:model='logo' type="file"  type="text" class="form-control form-control-solid me-3 flex-grow-1">
+                        {{-- <button  class="btn btn-primary btn-active-light-primary fw-bold flex-shrink-0" wire:click='saveWebhook'>Save</button> --}}
+                    </div>
+                </div>
+                <div class="col-xl-12 mt-10">
+                    <h4 class="text-gray-800 mb-0">Software name</h4>
+                    <p class="fs-6 fw-semibold text-gray-600 py-4 m-0">Plan your blog post by choosing a topic, creating an outline conduct
+                    <br>research, and checking facts</p>
+                    <div class="d-flex">
+                        <input wire:model='software_name' type="text"  type="text" class="form-control form-control-solid me-3 flex-grow-1">
+                        {{-- <button  class="btn btn-primary btn-active-light-primary fw-bold flex-shrink-0" wire:click='saveWebhook'>Save</button> --}}
+                    </div>
+                </div>
+                <div class="col-xl-12 mt-10">
+                    <h4 class="text-gray-800 mb-0">Software update name</h4>
+                    <p class="fs-6 fw-semibold text-gray-600 py-4 m-0">Plan your blog post by choosing a topic, creating an outline conduct
+                    <br>research, and checking facts</p>
+                    <div class="d-flex">
+                        <input wire:model='software_update_path' type="text"  type="text" class="form-control form-control-solid me-3 flex-grow-1">
+                        {{-- <button  class="btn btn-primary btn-active-light-primary fw-bold flex-shrink-0" wire:click='saveWebhook'>Save</button> --}}
+                    </div>
+                </div>
+                <div class="col-xl-12 mt-10">
+                    <h4 class="text-gray-800 mb-0">Version name</h4>
+                    <p class="fs-6 fw-semibold text-gray-600 py-4 m-0">Plan your blog post by choosing a topic, creating an outline conduct
+                    <br>research, and checking facts</p>
+                    <div class="d-flex">
+                        <input wire:model='version_number' type="text"  type="text" class="form-control form-control-solid me-3 flex-grow-1">
+                        {{-- <button  class="btn btn-primary btn-active-light-primary fw-bold flex-shrink-0" wire:click='saveWebhook'>Save</button> --}}
+                    </div>
+                </div>
+                <div class="col-xl-12 mt-10">
+                    <h4 class="text-gray-800 mb-0">Support number</h4>
+                    <p class="fs-6 fw-semibold text-gray-600 py-4 m-0">Plan your blog post by choosing a topic, creating an outline conduct
+                    <br>research, and checking facts</p>
+                    <div class="d-flex">
+                        <input wire:model='support_number' type="text"  type="text" class="form-control form-control-solid me-3 flex-grow-1">
+                        <button  class="btn btn-primary btn-active-light-primary fw-bold flex-shrink-0" wire:click='saveWebhook'>Save</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>

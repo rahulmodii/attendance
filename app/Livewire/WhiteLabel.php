@@ -10,9 +10,19 @@ use Livewire\Component;
 class WhiteLabel extends Component
 {
 
+    // $table->string('logo')->nullable();
+    //         $table->string('software_name')->nullable();
+    //         $table->string('software_update_path')->nullable();
+    //         $table->string('version_number')->nullable();
+    //         $table->string('support_number')->nullable();
     public $domain;
     public $webhook;
     public $authId;
+    public $logo;
+    public $software_name;
+    public $software_update_path;
+    public $version_number;
+    public $support_number;
 
     public function mount()
     {

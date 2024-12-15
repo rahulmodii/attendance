@@ -38,7 +38,7 @@ class AuthController extends Controller
         Verification::create([
             'mobile' => $user->mobile,
             'otp' => $localOtp,
-            'country_code' => $user->country_code
+            'country_code' => $user->country_code,
         ]);
 
         // Webhook URL for sending OTP via HTTP request
@@ -84,8 +84,8 @@ class AuthController extends Controller
 
         // Check for matching mobile and OTP in Verification table
         $query = Verification::where('mobile', $data['mobile'])
-                             ->where('otp', $data['otp'])
-                             ->first();
+            ->where('otp', $data['otp'])
+            ->first();
 
         if ($query) {
             // Find the user and log in using the user's ID
@@ -97,12 +97,21 @@ class AuthController extends Controller
                 // Generate an access token for the authenticated user
                 $token = $user->createToken('authToken')->plainTextToken;
                 $query->delete();
+                $newData = [
+                    "Icon" => "icon.ico",
+                    "WhiteLabelName" => "Your Brand",
+                    "CurrentSoftwareVersion" => "2.0.0",
+                    "IsExpired" => true,
+                    "DaysLeft" => 30,
+                    "UpdateSoftwareLink" => "https://example.com/update",
+                ];
                 return response()->json([
                     'status' => JsonResponse::HTTP_OK,
                     'token' => $token,
                     'message' => 'OTP Verified successfully!',
-                    'user'=>Auth::user(),
-                    'package'=>$package
+                    'user' => Auth::user(),
+                    'package' => $package,
+                    'newdata' => $newData
                 ], JsonResponse::HTTP_OK);
             }
 
@@ -117,7 +126,6 @@ class AuthController extends Controller
             ], JsonResponse::HTTP_UNAUTHORIZED);
         }
     }
-
 
     /**
      * Display the specified resource.
