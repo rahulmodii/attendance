@@ -289,7 +289,7 @@ class Login extends Component
                 'referral_code' => 'required',
             ]);
         }
-        // dd($this->country_code);
+
         if ($this->isSent) {
             $checkVerification = Verification::where(['mobile' => $this->mobile, 'otp' => $this->otp, 'country_code' => $this->country_code])->first();
             if ($checkVerification) {

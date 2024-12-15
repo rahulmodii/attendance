@@ -18,17 +18,17 @@ class ExpiryMiddleware
     public function handle(Request $request, Closure $next): Response
     {
 
-        if (auth()->user()->role == 1) {
-            $date = auth()->user()->expiry_date;
-        }
-        if (auth()->user()->role == 2) {
-            $parentId = auth()->user()->parent_id;
-            $date = User::find($parentId)->expiry_date;
-        }
+        // if (auth()->user()->role == 1) {
+        //     $date = auth()->user()->expiry_date;
+        // }
+        // if (auth()->user()->role == 2) {
+        //     $parentId = auth()->user()->parent_id;
+        //     $date = User::find($parentId)->expiry_date;
+        // }
 
-        if (Carbon::parse($date)->isPast()) {
-            return redirect()->route('packages');
-        }
+        // if (Carbon::parse($date)->isPast()) {
+        //     return redirect()->route('packages');
+        // }
 
         return $next($request);
     }
