@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Packages;
 use App\Models\User;
 use App\Models\Verification;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -69,6 +70,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'mobile' => ['required', 'digits:10', 'regex:/^[0-9]{10}$/'],
             'otp' => ['required', 'digits:4'],
+            'device_id' => 'nullable',
         ]);
 
         if ($validator->fails()) {
@@ -97,21 +99,35 @@ class AuthController extends Controller
                 // Generate an access token for the authenticated user
                 $token = $user->createToken('authToken')->plainTextToken;
                 $query->delete();
+                $expiryDate = Carbon::createFromFormat('Y-m-d', $user->expiry_date);
+                $today = Carbon::now();
+
+                // Check if the expiry date has passed
+                $isExpired = $expiryDate->isPast();
+
+                // Calculate days left until expiration
+                $daysLeft = round($today->diffInDays($expiryDate, false)); // false to get negative values if past
+
                 $newData = [
-                    "icon" => "https://cdn.icon-icons.com/icons2/4242/PNG/512/avalanche_avax_crypto_icon_264373.png",
-                    "whitelabelname" => "Your Brand",
-                    "currentsoftwareversion" => "2.0.0",
-                    "isexpired" => true,
-                    "daysleft" => 30,
-                    "updatesoftwarelink" => "https://example.com/update",
+                    "icon" => asset('/storage/' . $user->logo),
+                    "whitelabelname" => $user->software_name,
+                    "currentsoftwareversion" => $user->version_number,
+                    "isexpired" => $isExpired,
+                    "daysleft" => $daysLeft,
+                    "updatesoftwarelink" => $user->software_update_path,
+                    "device_id" => $user->device_id,
                 ];
+                if ($request->device_id) {
+                    $user->update(['device_id' => $request->device_id]);
+                }
+
                 return response()->json([
                     'status' => JsonResponse::HTTP_OK,
                     'token' => $token,
                     'message' => 'OTP Verified successfully!',
                     'user' => Auth::user(),
                     'package' => $package,
-                    'data' => $newData
+                    'data' => $newData,
                 ], JsonResponse::HTTP_OK);
             }
 
