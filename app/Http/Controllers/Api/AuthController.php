@@ -98,12 +98,12 @@ class AuthController extends Controller
                 $token = $user->createToken('authToken')->plainTextToken;
                 $query->delete();
                 $newData = [
-                    "Icon" => "icon.ico",
-                    "WhiteLabelName" => "Your Brand",
-                    "CurrentSoftwareVersion" => "2.0.0",
-                    "IsExpired" => true,
-                    "DaysLeft" => 30,
-                    "UpdateSoftwareLink" => "https://example.com/update",
+                    "icon" => "icon.ico",
+                    "whitelabelname" => "Your Brand",
+                    "currentsoftwareversion" => "2.0.0",
+                    "isexpired" => true,
+                    "daysleft" => 30,
+                    "updatesoftwarelink" => "https://example.com/update",
                 ];
                 return response()->json([
                     'status' => JsonResponse::HTTP_OK,
