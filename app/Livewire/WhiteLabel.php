@@ -59,8 +59,6 @@ class WhiteLabel extends Component
     {
         $data = [
             'software_name' => $this->software_name,
-            // 'software_update_path' => $this->software_update_path,
-            // 'version_number' => $this->version_number,
             'support_number' => $this->support_number,
         ];
 
@@ -70,6 +68,7 @@ class WhiteLabel extends Component
         }
         $update =  User::find($this->authId)->update($data);
         // dd($update);
+        return $this->dispatch('message', 'Config Updated Successfully!!');
     }
 
     public function render()
