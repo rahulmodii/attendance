@@ -111,7 +111,7 @@ class AuthController extends Controller
                     'message' => 'OTP Verified successfully!',
                     'user' => Auth::user(),
                     'package' => $package,
-                    'newdata' => $newData
+                    'data' => $newData
                 ], JsonResponse::HTTP_OK);
             }
 
