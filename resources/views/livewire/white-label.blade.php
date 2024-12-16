@@ -77,7 +77,7 @@
                     <br>research, and checking facts</p>
                     <div class="d-flex">
                         <input wire:model='support_number' type="text"  type="text" class="form-control form-control-solid me-3 flex-grow-1">
-                        <button  class="btn btn-primary btn-active-light-primary fw-bold flex-shrink-0" wire:click='saveWebhook'>Save</button>
+                        <button  class="btn btn-primary btn-active-light-primary fw-bold flex-shrink-0" wire:click='save'>Save</button>
                     </div>
                 </div>
             </div>

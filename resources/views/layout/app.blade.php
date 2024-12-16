@@ -58,8 +58,8 @@
                             <i class="ki-outline ki-abstract-14 fs-2"></i>
                         </div>
                         <a href="index.html">
-                            <img alt="Logo" src="/assets/media/logo.png" class="h-25px theme-light-show" />
-                            <img alt="Logo" src="/assets/media/logo.png" class="h-25px theme-dark-show" />
+                            <img alt="Logo" src="{{asset('/storage/'.$settings->logo)}}" class="h-25px theme-light-show" />
+                            <img alt="Logo" src="{{asset('/storage/'.$settings->logo)}}" class="h-25px theme-dark-show" />
                         </a>
                     </div>
                     <div class="app-navbar flex-lg-grow-1" id="kt_app_header_navbar">
@@ -111,9 +111,9 @@
                     <div class="app-sidebar-logo flex-shrink-0 d-none d-md-flex flex-center align-items-center"
                         id="kt_app_sidebar_logo">
                         <a href="/">
-                            <img alt="Logo" src="/assets/media/logo.png"
+                            <img alt="Logo" src="{{asset('/storage/'.$settings->logo)}}"
                                 class="h-90px d-none d-sm-inline app-sidebar-logo-default theme-light-show" />
-                            <img alt="Logo" src="/assets/media/logo.png" class="h-90px theme-dark-show" />
+                            <img alt="Logo" src="{{asset('/storage/'.$settings->logo)}}" class="h-90px theme-dark-show" />
                         </a>
                         <div class="d-flex align-items-center d-lg-none ms-n3 me-1" title="Show aside menu">
                             <div class="btn btn-icon btn-active-color-primary w-30px h-30px"
@@ -225,7 +225,7 @@
                                 data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-overflow="true"
                                 data-kt-menu-placement="top-start">
                                 <div class="d-flex flex-center cursor-pointer symbol symbol-circle symbol-40px">
-                                    <img src="/assets/media/logo.png" alt="image" />
+                                    <img src="{{asset('/storage/'.$settings->logo)}}" alt="image" />
                                 </div>
                                 <div class="d-flex flex-column align-items-start justify-content-center ms-3">
                                     <span class="text-gray-500 fs-8 fw-semibold">Hello</span>
@@ -238,7 +238,7 @@
                                 <div class="menu-item px-3">
                                     <div class="menu-content d-flex align-items-center px-3">
                                         <div class="symbol symbol-50px me-5">
-                                            <img alt="Logo" src="/assets/media/logo.png" />
+                                            <img alt="Logo" src="{{asset('/storage/'.$settings->logo)}}" />
                                         </div>
                                         <div class="d-flex flex-column">
                                             <div class="fw-bold d-flex align-items-center fs-5">
@@ -318,7 +318,7 @@
                             <div class="text-gray-900 order-2 order-md-1">
                                 <span class="text-muted fw-semibold me-1">2024&copy;</span>
                                 <a href="/" target="_blank"
-                                    class="text-gray-800 text-hover-primary">{{ config('app.name') }}</a>
+                                    class="text-gray-800 text-hover-primary">{{ $settings->software_name ?? '' }}</a>
                             </div>
                             <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
                                 {{-- <li class="menu-item">

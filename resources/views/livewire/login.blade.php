@@ -1,11 +1,13 @@
+
 <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+    @if ($settings)
     <div class="d-flex flex-lg-row-fluid">
         <div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100"> <img
                 class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
                 src="/assets/media/svg/illustrations/easy/undraw_selfie_re_h9um.svg" alt="" /> <img
                 class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20"
                 src="/assets/media/svg/illustrations/easy/undraw_selfie_re_h9um.svg" alt="" />
-            <h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">Wappblaster Attendance Management</h1>
+            <h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7">{{$settings->software_name ?? ''}} Attendance Management</h1>
             <div class="text-gray-600 fs-base text-center fw-semibold">
                 <span> Staff attendance with selfie and location wise.</span><br />
                 <span> Get daily <a href="">Whatsapp report</a> with precise in out timing of all the
@@ -21,7 +23,7 @@
                     <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
                         data-kt-redirect-url="index.html" action="#">
                         <div class="text-center mb-11">
-                            <h1 class="text-gray-900 fw-bolder mb-3">Wappblaster Attendance Management</h1>
+                            <h1 class="text-gray-900 fw-bolder mb-3">{{$settings->software_name ?? ''}} Attendance Management</h1>
                             {{-- <div class="text-gray-500 fw-semibold fs-6">Your Login</div> --}}
                         </div>
                         <div class="separator separator-content my-14"> <span
@@ -68,4 +70,6 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
+

@@ -39,7 +39,8 @@ class User extends Authenticatable
         'software_name',
         'software_update_path',
         'version_number',
-        'support_number'
+        'support_number',
+        'device_id'
     ];
 
     /**
