@@ -67,6 +67,9 @@ return [
 
     'timezone' => env('APP_TIMEZONE', 'UTC'),
 
+    'softwareversion' => env('SOFTWARE_VERSION', 'UTC'),
+    'softwareupdateurl' => env('SOFTWARE_UPDATE_URL', 'UTC'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

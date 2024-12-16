@@ -111,10 +111,10 @@ class AuthController extends Controller
                 $newData = [
                     "icon" => asset('/storage/' . $user->logo),
                     "whitelabelname" => $user->software_name,
-                    "currentsoftwareversion" => $user->version_number,
+                    "currentsoftwareversion" => config('app.softwareversion'),
                     "isexpired" => $isExpired,
                     "daysleft" => $daysLeft,
-                    "updatesoftwarelink" => $user->software_update_path,
+                    "updatesoftwarelink" => config('app.softwareupdateurl'),
                     "device_id" => $user->device_id,
                 ];
                 if ($request->device_id) {
