@@ -98,7 +98,7 @@ class AuthController extends Controller
                 $token = $user->createToken('authToken')->plainTextToken;
                 $query->delete();
                 $newData = [
-                    "icon" => "icon.ico",
+                    "icon" => "https://cdn.icon-icons.com/icons2/4242/PNG/512/avalanche_avax_crypto_icon_264373.png",
                     "whitelabelname" => "Your Brand",
                     "currentsoftwareversion" => "2.0.0",
                     "isexpired" => true,
