@@ -10,6 +10,7 @@ Route::get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1'], function () {
     Route::post('/sendotp', [AuthController::class, 'index']);
     Route::post('/verifyotp', [AuthController::class, 'store']);
+    Route::get('/profile',[AuthController::class,'profile'])->middleware('auth:sanctum');
 });
 
 

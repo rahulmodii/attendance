@@ -146,9 +146,36 @@ class AuthController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function profile()
     {
-        //
+
+        $user = Auth::user();
+
+        $expiryDate = Carbon::createFromFormat('Y-m-d', $user->expiry_date);
+        $today = Carbon::now();
+        $package = Packages::find($user->package_id);
+        // Check if the expiry date has passed
+        $isExpired = $expiryDate->isPast();
+
+        // Calculate days left until expiration
+        $daysLeft = round($today->diffInDays($expiryDate, false)); // false to get negative values if past
+
+        $newData = [
+            "icon" => asset('/storage/' . $user->logo),
+            "whitelabelname" => $user->software_name,
+            "currentsoftwareversion" => config('app.softwareversion'),
+            "isexpired" => $isExpired,
+            "daysleft" => $daysLeft,
+            "updatesoftwarelink" => config('app.softwareupdateurl'),
+            "device_id" => $user->device_id,
+        ];
+        return response()->json([
+            'status' => JsonResponse::HTTP_OK,
+            'message' => 'User Data',
+            'user' => Auth::user(),
+            'package' => $package,
+            'data' => $newData,
+        ], JsonResponse::HTTP_OK);
     }
 
     /**
