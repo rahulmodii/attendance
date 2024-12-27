@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Settings;
 use App\Models\User;
 use App\Models\Verification;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
@@ -309,7 +310,7 @@ class Login extends Component
                 } else {
                     $referId = User::where(['mobile' => $this->referral_code])->first();
                     if ($referId) {
-                        $auth = User::create(['name' => Str::random(8), 'email' => "$this->country_code $this->mobile@mailsac.com", 'mobile' => $this->mobile, 'password' => Hash::make($this->mobile), 'role' => 1, 'country_code' => $this->country_code, 'referal_id' => $referId->id]);
+                        $auth = User::create(['name' => Str::random(8), 'email' => "$this->country_code $this->mobile@mailsac.com", 'mobile' => $this->mobile, 'password' => Hash::make($this->mobile), 'role' => 1, 'country_code' => $this->country_code, 'referal_id' => $referId->id,'expiry_date'=>Carbon::now()->addDays(3)->format('Y-m-d')]);
                         Auth::login($auth, true);
                         $id = Auth::user()->id;
                         if (auth()->user()->role == 1) {
