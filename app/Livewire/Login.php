@@ -334,7 +334,7 @@ class Login extends Component
             // $this->otp = $localotp;
             Verification::where(['mobile' => $this->mobile, 'country_code' => $this->country_code])->delete();
             Verification::create(['mobile' => $this->mobile, 'otp' => $localotp, 'country_code' => $this->country_code]);
-            $url = 'https://webhooks.wappblaster.com/webhook/669b736a97d275a0b8012769';
+            $url = 'https://webhooks.wappblaster.com/webhook/67750c36ea04d946eaf7bcf0';
             $response = Http::get($url, [
                 'number' => $mobile,
                 'otp' => $localotp,
