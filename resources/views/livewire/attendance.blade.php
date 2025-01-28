@@ -11,8 +11,9 @@
                         <h1 class="fw-semibold text-white text-center lh-lg mb-9">Submit Your Daily Attendance
                             <br>
                             <span class="fw-bolder">Stay still for 10 sec when camera starts it will auto capture</span>
-                            <br/>
-                            <span class="fw-bolder" style="font-weight: bold;color:black">Capture selfie only in office</span>
+                            <br />
+                            <span class="fw-bolder" style="font-weight: bold;color:black">Capture selfie only in
+                                office</span>
                         </h1>
                         <!--end::Title-->
                         <!--begin::Illustration-->
@@ -60,7 +61,13 @@
                 {{-- <span class="text-gray-500 mt-1 fw-semibold fs-6">{{ $latitude }} {{ $longitude }}</span> --}}
             </h3>
             <div class="card-toolbar">
-
+                <select class="form-control form-select" wire:model.live='employeeFilterId'>
+                    <option value="{{ auth()->user()->id }}">Select Employee</option>
+                    @foreach ($employees as $key => $employee)
+                        <option value="{{ $employee->id }}">
+                            {{ $employee->name }} ({{ $employee->mobile }})</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <div class="card-body">
@@ -79,7 +86,7 @@
                     </thead>
                     <tbody class="fw-bold text-gray-600">
                         {{-- @dd($data); --}}
-                        @foreach ($data as $value)
+                        @forelse ($data as $value)
                             <tr>
                                 <td class="text-center">
                                     {{ \Carbon\Carbon::parse($value->date)->format('d-m-Y') ?? '' }}
@@ -104,7 +111,11 @@
                                     {{ $value->total_minutes ?? '' }} min
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center">No Record Found</td>
+                            </tr>
+                        @endforelse
 
 
                     </tbody>

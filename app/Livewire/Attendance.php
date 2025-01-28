@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-
+use App\Models\User;
 class Attendance extends Component
 {
 
@@ -20,11 +20,22 @@ class Attendance extends Component
     public $isDisable = true;
     public $currentSessionId = 0;
 
+    public $employeeFilterId = 0;
+
+    public $data = [];
+
     protected $listeners = [
         'set:latitude-longitude' => 'setLatitudeLongitude',
         'set:live-image' => 'setLiveImage',
         'set:live-image-checkout' => 'setLiveImageCheckout',
     ];
+
+    public function mount(){
+        $auth = Auth::user();
+        $this->employeeFilterId = $auth->id;
+        $data = AttendanceSession::where('user_id', $auth->id)->orderBy('id', 'desc')->get();
+        $this->data = $data;
+    }
 
     public function setLatitudeLongitude($latitude, $longitude)
     {
@@ -156,10 +167,16 @@ class Attendance extends Component
         }
     }
 
+    public function updatedEmployeeFilterId($value)
+    {
+        // $this->isDisable = true;
+        $this->data  = AttendanceSession::where('user_id', $value)->orderBy('id', 'desc')->get();
+    }
+
     public function render()
     {
         $auth = Auth::user();
-        $data = AttendanceSession::where('user_id', $auth->id)->orderBy('id', 'desc')->get();
-        return view('livewire.attendance', compact('data'));
+        $employees = User::where('parent_id', $auth->id)->get();
+        return view('livewire.attendance', compact('employees'));
     }
 }
