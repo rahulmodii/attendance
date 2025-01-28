@@ -158,10 +158,9 @@
                                 </div>
                                 <div
                                     class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
-                                    <div class="dataTables_paginate paging_simple_numbers"
-                                        id="kt_table_users_paginate">
+                                    <div class="dataTables_paginate paging_simple_numbers">
                                         <ul class="pagination">
-                                            {{ $data->links('pagination::bootstrap-5') }}
+                                            {{ $data->links() }}
                                         </ul>
                                     </div>
                                 </div>

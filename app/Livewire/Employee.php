@@ -11,7 +11,7 @@ use Livewire\WithPagination;
 
 class Employee extends Component
 {
-
+    protected $paginationTheme = 'bootstrap';
     use WithPagination;
 
     public $name;
