@@ -14,12 +14,15 @@ class Employee extends Component
 
     use WithPagination;
 
-    #[Validate('required|min:3')]
     public $name;
-    #[Validate('required|min:10|unique:users,mobile')]
     public $mobile;
-    #[Validate('required')]
     public $country_code = 91;
+
+    public $createEmployee = false;
+
+    public $updateEmployee = false;
+
+    public $updateId;
 
     public $countryList = [
         "91" => "India",
@@ -269,24 +272,75 @@ class Employee extends Component
         "260" => "Zambia",
         "263" => "Zimbabwe",
     ];
+    protected function getValidationRules()
+    {
+        if ($this->updateEmployee) {
+            return [
+                'name' => 'required|min:3',
+                'mobile' => 'required|min:10|unique:users,mobile,' . $this->updateId,
+                'country_code' => 'required',
+            ];
+        }
 
+        return [
+            'name' => 'required|min:3',
+            'mobile' => 'required|min:10|unique:users,mobile',
+            'country_code' => 'required',
+        ];
+    }
     public function store()
     {
-        $validated = $this->validate();
+        $validated = $this->validate($this->getValidationRules());
 
         $auth = Auth::user();
 
-        User::create([
-            'name' => $this->name,
-            'email' => "$this->mobile@mailsac.com",
-            'password' => Hash::make($this->mobile),
-            'role' => 2,
-            'mobile' => $this->mobile,
-            'country_code' => $this->country_code,
-            'parent_id' => $auth->id,
-        ]);
+        if ($this->updateEmployee) {
+            User::where('id', $this->updateId)->update([
+                'name' => $this->name,
+                'mobile' => $this->mobile,
+                'country_code' => $this->country_code,
+            ]);
+            $this->updateEmployee = false;
+            $this->updateId = 0;
+            $this->createEmployee = false;
+            return $this->dispatch('message', 'Employee Updated Successfully!!');
+        } else {
+            User::create([
+                'name' => $this->name,
+                'email' => "$this->mobile@mailsac.com",
+                'password' => Hash::make($this->mobile),
+                'role' => 2,
+                'mobile' => $this->mobile,
+                'country_code' => $this->country_code,
+                'parent_id' => $auth->id,
+            ]);
+            $this->createEmployee = false;
+            return $this->dispatch('message', 'Employee Created Successfully!!');
+        }
 
-        return $this->dispatch('message', 'Employee Created Successfully!!');
+
+    }
+
+    public function resets(){
+        $this->name = '';
+        $this->mobile = '';
+        $this->country_code = 91;
+    }
+
+    public function employeeStatus()
+    {
+        $this->createEmployee = true;
+    }
+
+    public function edit($id){
+        // dd($id);
+        $user = User::find($id);
+        $this->name = $user->name;
+        $this->mobile = $user->mobile;
+        $this->country_code = $user->country_code;
+        $this->updateEmployee = true;
+        $this->updateId = $id;
+        $this->createEmployee = true;
     }
 
     public function render()
