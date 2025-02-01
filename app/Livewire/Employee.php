@@ -303,6 +303,7 @@ class Employee extends Component
             $this->updateEmployee = false;
             $this->updateId = 0;
             $this->createEmployee = false;
+            $this->resets();
             return $this->dispatch('message', 'Employee Updated Successfully!!');
         } else {
             User::create([
@@ -315,6 +316,7 @@ class Employee extends Component
                 'parent_id' => $auth->id,
             ]);
             $this->createEmployee = false;
+            $this->resets();
             return $this->dispatch('message', 'Employee Created Successfully!!');
         }
 
